@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models
+	xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.1.xsd">
+	
+	<module package="com.axelor.gst.db" name="gst"/>
+	<entity name="Address">
+		<string name="type" title="Type" required="true" selection="com.axelor.gst.address.type"/>
+		<string name="line1" title="Line 1" required="true" />
+		<string name="line2" title="Line 2" />
+		<many-to-one name="city" ref="com.axelor.gst.db.City" title="City" required="true" />
+		<many-to-one name="state" ref="com.axelor.gst.db.State" title="State"/>
+		<many-to-one name="country" ref="com.axelor.gst.db.Country" title="Country" required="true" />
+		<string name="pincode" title="Pincode"/>
+		
+		<extra-code>
+			<![CDATA[
+				public static final String ADDRESS_TYPE_DEFAULT = "default";
+				public static final String ADDRESS_TYPE_INVOICE = "invoice";
+				public static final String ADDRESS_TYPE_SHIPPING = "shipping";
+				public static final String ADDRESS_TYPE_OTHER = "other";
+			]]>
+		</extra-code>
+	</entity>
+</domain-models>

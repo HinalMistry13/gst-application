@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+	
+	<grid model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-grid">
+		<field name="status" title="Status"/>
+		<field name="company" title="Company"/>
+		<field name="reference" title="Reference"/>
+		<field name="invoiceDate" title="Date"/>
+		<field name="priority" title="Priority"/>
+		<field name="party" title="Party"/>
+		<field name="partyContact" title="Party Contact"/>
+		<field name="invoiceAddress" title="Invoice Address"/>
+		<field name="shippingAddress" title="Shipping Address"/>
+		<field name="netAmount" title="Net Amount"/>
+		<field name="netIGST" title="Net IGST"/>
+		<field name="netCGST" title="Net CGST"/>
+		<field name="netSGST" title="Net SGST"/>
+		<field name="grossAmount" title="Gross Amount"/>
+		<field name="invoiceItems" title="Invoice Items"/>
+	</grid>
+	
+	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form">
+		<panel>
+			<field name="reference" readonly="true" colSpan="3" showIf="id"/>
+			<field name="status" readonly="true" widget="nav-select" colSpan="9"/>
+			<field name="company" required="true"/>
+			<field name="invoiceDate"/>
+			<field name="priority"/>
+			<field name="party" required="true"/>
+			<field name="partyContact"/>
+			<field name="invoiceAddress" required="true"/>
+			<field name="shippingAddress"/>
+			<field name="sameAddress" />
+			<field name="netAmount" readonly="true"/>
+			<field name="netIGST" readonly="true"/>
+			<field name="netCGST" readonly="true"/>
+			<field name="netSGST" readonly="true"/>
+			<field name="grossAmount" readonly="true"/>
+		</panel>
+		<panel>
+			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12"/>
+		</panel>
+	</form>
+	
+</object-views>

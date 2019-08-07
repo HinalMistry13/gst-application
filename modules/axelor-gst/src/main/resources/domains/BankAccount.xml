@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models
+	xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.1.xsd">
+	
+	<module package="com.axelor.gst.db" name="gst"/>
+	<entity name="BankAccount">
+		<string name="bank" title="Bank" namecolumn="true" required="true" />
+		<string name="accountNo" title="Account No" required="true" />
+		<string name="ifsc" title="IFSC" required="true" />
+		<string name="type" title="Type" default="current" selection="com.axelor.gst.bank.account.type"/>
+		<string name="address" title="Address" />
+		
+		<extra-code>
+			<![CDATA[
+				public static final String BANK_ACCOUNT_TYPE_SAVING = "saving";
+				public static final String BANK_ACCOUNT_TYPE_CURRENT = "current";
+			]]>
+		</extra-code>
+	</entity>
+</domain-models>

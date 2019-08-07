@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models
+	xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.1.xsd">
+
+	<module package="com.axelor.gst.db" name="gst" />
+
+	<enum name="InvoiceStatus">
+		<item name="DRAFT" value="draft" />
+		<item name="VALIDATED" value="validated" />
+		<item name="PAID" value="paid" />
+		<item name="CANCELED" value="canceled" />
+	</enum>
+
+	<entity name="Invoice">
+		<enum name="status" ref="InvoiceStatus" title="Status" readonly="true"/>
+		<many-to-one name="company" ref="com.axelor.gst.db.Company" required="true"/>
+		<string name="reference" title="Reference" readonly="true"/>
+		<datetime name="invoiceDate" title="Date"/>
+		<integer name="priority"/>
+		<many-to-one name="party" ref="com.axelor.gst.db.Party" required="true"/>
+		<many-to-one name="partyContact" ref="com.axelor.gst.db.Contact"/>
+		<many-to-one name="invoiceAddress" ref="com.axelor.gst.db.Address" required="true"/>
+		<many-to-one name="shippingAddress" ref="com.axelor.gst.db.Address"/>
+		<boolean name="sameAddress" transient="true" default="true"/>
+		<decimal name="netAmount" readonly="true"/>
+		<decimal name="netIGST" readonly="true"/>
+		<decimal name="netCGST" readonly="true"/>
+		<decimal name="netSGST" readonly="true"/>
+		<decimal name="grossAmount" readonly="true"/>
+		<one-to-many name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine"/>
+	
+		<extra-code>
+			<![CDATA[
+				public static final String INVOICE_STATUS_DRAFT = "draft";
+				public static final String INVOICE_STATUS_VALIDATED = "validated";
+				public static final String INVOICE_STATUS_PAID = "paid";
+				public static final String INVOICE_STATUS_CANCELED = "canceled";
+			]]>
+		</extra-code>
+	</entity>
+</domain-models>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+	
+	<selection name="com.axelor.gst.address.type">
+		<option value="default">Default</option>
+		<option value="invoice">Invoice</option>
+		<option value="shipping">Shipping</option>
+		<option value="other">Other</option>
+	</selection>
+	
+	<grid model="com.axelor.gst.db.Address" title="Address" name="address-grid">
+		<field name="type" title="Address Type"/>
+		<field name="line1" title="Line 1" />
+		<field name="line2" title="Line 2" />
+		<field name="city" title="City" />
+		<field name="state" title="State" />
+		<field name="country" title="Country" />
+		<field name="pincode" title="Pincode" />
+	</grid>
+	
+	<form model="com.axelor.gst.db.Address" title="Address" name="address-form">
+		<panel>
+			<field name="type" required="true"/>
+			<field name="line1" required="true"/>
+			<field name="line2" />
+			<field name="city" required="true"/>
+			<field name="state"/>
+			<field name="country" required="true"/>
+			<field name="pincode"/>
+		</panel>
+	</form>
+	
+</object-views>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+	
+	<grid model="com.axelor.gst.db.InvoiceLine" title="Invoice Line" name="invoice-line-grid">
+		<field name="invoice" title="Invoice"/>
+		<field name="product" title="Product"/>
+		<field name="hsbn" title="HSBN" />
+		<field name="item" title="Item"/>
+		<field name="qty" title="Quantity"/>
+		<field name="price" title="Price" />
+		<field name="netAmount" title="Net Amount" />
+		<field name="gstRate" title="GST Rate" />
+		<field name="igst" title="IGST" />
+		<field name="sgst" title="SGST" />
+		<field name="cgst" title="CGST"/>
+		<field name="grossAmount" title="Gross Amount" />
+	</grid>
+	
+	<form model="com.axelor.gst.db.InvoiceLine" title="Invoice Line" name="invoice-line-form">
+		<panel>
+			<field name="invoice" />
+			<field name="product"/>
+			<field name="hsbn" />
+			<field name="item" required="true"/>
+			<field name="qty" default="1"/>
+			<field name="price" />
+			<field name="netAmount" readonly="true" />
+			<field name="gstRate" readonly="true" />
+			<field name="igst" readonly="true" />
+			<field name="sgst" readonly="true" />
+			<field name="cgst" readonly="true" />
+			<field name="grossAmount" readonly="true" />
+		</panel>
+	</form>
+	
+</object-views>

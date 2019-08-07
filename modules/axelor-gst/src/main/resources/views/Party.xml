@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+
+	<selection name="com.axelor.gst.party.type">
+		<option value="individual">Individual</option>
+		<option value="company">Company</option>
+	</selection>
+
+	<grid model="com.axelor.gst.db.Party" title="Party"	name="party-grid">
+		<field name="reference" title="Reference" />
+		<field name="name" title="Name" />
+		<field name="type" title="Type" />
+		<field name="customer" title="Customer" />
+		<field name="supplier" title="Supplier" />
+		<field name="gstIn" title="GSTIN" />
+		<field name="contact" title="Contact" />
+		<field name="address" title="Address" />
+	</grid>
+
+	<form model="com.axelor.gst.db.Party" title="Party"	name="party-form">
+		<panel>
+<!-- 			<field name="reference" readonly="true" /> -->
+			<field name="name" required="true" />
+			<field name="type" required="true" />
+			<field name="customer" widget="boolean-switch" colSpan="3"/>
+			<field name="supplier" widget="boolean-switch" colSpan="3"/>
+			<field name="gstIn" min="15" max="15"/>
+		</panel>
+		<panel title="Contacts">
+			<field name="contact" showTitle="false" colSpan="12">
+				<editor>
+					<field name="name" required="true" />
+					<field name="type" required="true" />
+					<field name="primaryEmail" />
+					<field name="secondaryEmail" />
+					<field name="primaryPhone" />
+					<field name="secondaryPhone" />
+				</editor>
+			</field>
+		</panel>
+		<panel title="Address">
+			<field name="address" showTitle="false" colSpan="12">
+				<editor>
+					<field name="type" required="true" />
+					<field name="line1" required="true" />
+					<field name="line2" />
+					<field name="city" required="true" />
+					<field name="state" />
+					<field name="country" required="true" />
+					<field name="pincode" />
+				</editor>
+			</field>
+		</panel>
+	</form>
+
+</object-views>
