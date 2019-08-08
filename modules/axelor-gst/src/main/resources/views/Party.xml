@@ -20,13 +20,13 @@
 	</grid>
 
 	<form model="com.axelor.gst.db.Party" title="Party"	name="party-form">
-		<panel>
-<!-- 			<field name="reference" readonly="true" /> -->
+		<panel title="Overview">
+			<field name="reference" readonly="true" showIf="id" />
 			<field name="name" required="true" />
 			<field name="type" required="true" />
+			<field name="gstIn" min="15" max="15"/>
 			<field name="customer" widget="boolean-switch" colSpan="3"/>
 			<field name="supplier" widget="boolean-switch" colSpan="3"/>
-			<field name="gstIn" min="15" max="15"/>
 		</panel>
 		<panel title="Contacts">
 			<field name="contact" showTitle="false" colSpan="12">

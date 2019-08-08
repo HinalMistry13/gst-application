@@ -23,11 +23,16 @@
 				<field name="name" required="true" />
 				<field name="code" required="true"/>
 				<field name="hsbn" />
-				<field name="category"/>
+				<field name="category" onChange="action-product-attr-set-gstrate"/>
 				<field name="salePrice" />
 				<field name="costPrice"/>
 				<field name="gstRate"/>				
 			</panel>
 		</panel>
 	</form>
+	
+	<action-attrs name="action-product-attr-set-gstrate">
+		<attribute name="value:set" for="gstRate" expr="eval: category.gstRate" />
+	</action-attrs>
+	
 </object-views>

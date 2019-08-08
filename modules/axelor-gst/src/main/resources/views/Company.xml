@@ -13,8 +13,7 @@
 		<field name="address" title="Address" />
 	</grid>
 
-	<form model="com.axelor.gst.db.Company" title="Company"
-		name="company-form">
+	<form model="com.axelor.gst.db.Company" title="Company"	name="company-form">
 		<panel colSpan="12">
 			<panel colSpan="4">
 				<field name="logo" showTitle="false" colSpan="12" widget="image" />
@@ -37,13 +36,13 @@
 				</editor>
 			</field>
 		</panel>
-		<panel title="Bank Accounts">
+		<panel title="Bank Details">
 			<field name="bankAccount" showTitle="false" colSpan="12">
 				<editor>
 					<field name="bank" required="true" />
 					<field name="accountNo" required="true" />
 					<field name="ifsc" required="true" />
-					<field name="type" />
+					<field name="type"/>
 					<field name="address" />
 				</editor>
 			</field>

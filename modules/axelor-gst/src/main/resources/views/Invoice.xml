@@ -20,27 +20,68 @@
 		<field name="invoiceItems" title="Invoice Items"/>
 	</grid>
 	
-	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form">
-		<panel>
-			<field name="reference" readonly="true" colSpan="3" showIf="id"/>
-			<field name="status" readonly="true" widget="nav-select" colSpan="9"/>
+	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form" onNew="action-invoice-record-default-record">
+		<panel>		
+			<panel colSpan="8">
+				<field name="status" readonly="true" widget="nav-select" colSpan="12"/>
+				<field name="reference" readonly="true" showIf="id"/>
+			</panel>
+			<panel colSpan="4">
+				<button name="btnValid" title="Validated" colSpan="12" onClick="action-invoice-attr-status-validated"/>
+				<button name="btnPaid" title="Paid" colSpan="12" onClick="action-invoice-attr-status-paid"/>
+				<button name="btnCancel" title="Canceled" colSpan="12" onClick="action-invoice-attr-status-canceled"/>
+			</panel>
 			<field name="company" required="true"/>
-			<field name="invoiceDate"/>
-			<field name="priority"/>
-			<field name="party" required="true"/>
-			<field name="partyContact"/>
-			<field name="invoiceAddress" required="true"/>
-			<field name="shippingAddress"/>
-			<field name="sameAddress" />
-			<field name="netAmount" readonly="true"/>
-			<field name="netIGST" readonly="true"/>
-			<field name="netCGST" readonly="true"/>
-			<field name="netSGST" readonly="true"/>
-			<field name="grossAmount" readonly="true"/>
+			<field name="invoiceDate" colSpan="4"/>
+			<field name="priority" colSpan="2"/>
+			<field name="party" required="true" onChange="action-invoice-attr-set-party-contact"/>
+			<field name="partyContact" domain="self.type = 'primary'"/>
+			<field name="invoiceAddress" required="true" onSelect="action-invoice-attr-invoice-address"/>
+			<field name="shippingAddress" onSelect="action-invoice-attr-shipping-address"/>
+			<field name="sameAddress" title="Use Invoice Address as Shipping Address" onChange="action-invoice-attr-set-shipping"/>
 		</panel>
 		<panel>
 			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12"/>
 		</panel>
+		<panel>
+			<field name="netAmount" title="Net Amount" readonly="true"/>
+			<field name="netIGST" title="Net IGST" readonly="true"/>
+			<field name="netCGST" title="Net CGST" readonly="true"/>
+			<field name="netSGST" title="Net SGST" readonly="true"/>
+			<field name="grossAmount" title="Gross Amount" readonly="true"/>		
+		</panel>
 	</form>
 	
+	<action-attrs name="action-invoice-attr-status-validated">
+		<attribute name="value" for="status" expr="VALIDATED"/>
+	</action-attrs>
+	
+	<action-attrs name="action-invoice-attr-status-paid">
+		<attribute name="value" for="status" expr="PAID"/>
+	</action-attrs>
+	
+	<action-attrs name="action-invoice-attr-status-canceled">
+		<attribute name="value" for="status" expr="CANCELED"/>
+	</action-attrs>
+	
+	<action-record name="action-invoice-record-default-record" model="com.axelor.gst.db.Invoice">
+		<field name="invoiceDate" expr="eval:__date__"/>
+		<field name="status" expr="DRAFT"/>
+	</action-record>
+	
+	<action-attrs name="action-invoice-attr-set-shipping">
+		<attribute name="value:set" for="shippingAddress" expr="eval:invoiceAddress" if="sameAddress"/>
+	</action-attrs>
+	
+	<action-attrs name="action-invoice-attr-invoice-address">
+		<attribute name="domain" for="invoiceAddress" expr="eval: &quot;self.id IN (${party?.address?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='invoice') &quot;"/>
+	</action-attrs>
+	
+	<action-attrs name="action-invoice-attr-shipping-address">
+		<attribute name="domain" for="shippingAddress" expr="eval: &quot;self.id IN (${party?.address?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='invoice') &quot;"/>
+	</action-attrs>
+	
+	<action-attrs name="action-invoice-attr-set-party-contact">
+		<attribute name="domain" for="partyContact" expr="eval: &quot;self.id IN (${party?.contact?.collect{it.id}?.join(',')}) AND self.type='primary' &quot;"/>
+	</action-attrs>
 </object-views>

@@ -17,7 +17,7 @@
 	    	<view type="form" name="contact-form"/>
 	   	</action-view>
 	   	
-   		<menuitem name="menu-party-root-config" parent="menu-party-root" title="Congigurations"/>
+   		<menuitem name="menu-party-root-config" parent="menu-party-root" title="Configurations"/>
   	
 		  	<menuitem name="menu-party-root-config-address" parent="menu-party-root-config" title="Address" action="action.config.address"/>
 		  	<action-view name="action.config.address" title="Address" model="com.axelor.gst.db.Address">
