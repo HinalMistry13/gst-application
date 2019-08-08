@@ -41,7 +41,7 @@
 			<field name="sameAddress" title="Use Invoice Address as Shipping Address" onChange="action-invoice-attr-set-shipping"/>
 		</panel>
 		<panel>
-			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12"/>
+			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12" form-view="invoice-item-popup-form"/>
 		</panel>
 		<panel>
 			<field name="netAmount" title="Net Amount" readonly="true"/>
@@ -49,6 +49,22 @@
 			<field name="netCGST" title="Net CGST" readonly="true"/>
 			<field name="netSGST" title="Net SGST" readonly="true"/>
 			<field name="grossAmount" title="Gross Amount" readonly="true"/>		
+		</panel>
+	</form>
+	
+	<form model="com.axelor.gst.db.InvoiceLine" title="Invoice Items" name="invoice-item-popup-form">
+		<panel>
+			<field name="product" onChange="action-invoiceline-attr-get-product-gstrate"/>
+			<field name="hsbn" />
+			<field name="item" required="true"/>
+			<field name="qty" default="1" colSpan="2"/>
+			<field name="price" colSpan="4"/>
+			<field name="netAmount" readonly="true" />
+			<field name="gstRate" readonly="true" />
+			<field name="igst" readonly="true" />
+			<field name="sgst" readonly="true" />
+			<field name="cgst" readonly="true" />
+			<field name="grossAmount" readonly="true" />
 		</panel>
 	</form>
 	
@@ -78,7 +94,7 @@
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-shipping-address">
-		<attribute name="domain" for="shippingAddress" expr="eval: &quot;self.id IN (${party?.address?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='invoice') &quot;"/>
+		<attribute name="domain" for="shippingAddress" expr="eval: &quot;self.id IN (${party?.address?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='shipping') &quot;"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-set-party-contact">
