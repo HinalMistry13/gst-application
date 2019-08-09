@@ -34,7 +34,9 @@
 		</panel>
 	</form>
 	
-	<action-attrs name="action-invoiceline-attr-get-product-gstrate">
+	<action-attrs name="action-invoiceline-attr-get-product-data">
 		<attribute name="value:set" for="gstRate" expr="eval: product.gstRate"/>
+<!-- 		<attribute name="value:set" for="item" expr="eval: '['+product.code+'] '+product.name"/> -->
+		<attribute name="value:set" for="price" expr="eval: product.salePrice"/>
 	</action-attrs>
 </object-views>
