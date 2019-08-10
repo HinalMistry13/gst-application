@@ -74,7 +74,7 @@
   					<contact>
   						<div data-ng-repeat="c in contact">
   							<strong>{{c.name}}</strong><br>
-  							<strong><i class='fa fa-envelope-o'></i> : </strong> {{c.primaryEmail}}<br>
+  							<strong><i class='fa fa-envelope'></i> : </strong> {{c.primaryEmail}}<br>
   							<strong><i class="fa fa-phone"></i> : </strong> {{c.primaryPhone}}<br><br>
   						</div>	
   					</contact>
