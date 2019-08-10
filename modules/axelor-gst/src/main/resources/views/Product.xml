@@ -3,36 +3,83 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
 
-	<grid model="com.axelor.gst.db.Product" title="Product"	name="product-grid">
+	<grid model="com.axelor.gst.db.Product" title="Product"
+		name="product-grid">
 		<field name="image" title="Image" widget="image" />
 		<field name="name" title="Name" />
 		<field name="code" title="Code" />
 		<field name="hsbn" title="HSBN" />
-		<field name="category" title="Category"/>
+		<field name="category" title="Category" />
 		<field name="salePrice" title="Sale Price" />
 		<field name="costPrice" title="Cost Price" />
-		<field name="gstRate" title="GST Rate"/>
+		<field name="gstRate" title="GST Rate" />
 	</grid>
 
-	<form model="com.axelor.gst.db.Product" title="Product"	name="product-form">
+	<form model="com.axelor.gst.db.Product" title="Product"
+		name="product-form">
 		<panel colSpan="12">
 			<panel colSpan="4">
-				<field name="image" showTitle="false" colSpan="12" widget="image" />
+				<field name="image" showTitle="false" colSpan="12"
+					widget="image" />
 			</panel>
 			<panel colspan="8">
 				<field name="name" required="true" />
-				<field name="code" required="true"/>
+				<field name="code" required="true" />
 				<field name="hsbn" />
-				<field name="category" onChange="action-product-attr-set-gstrate"/>
+				<field name="category"
+					onChange="action-product-attr-set-gstrate" />
 				<field name="salePrice" />
-				<field name="costPrice"/>
-				<field name="gstRate"/>				
+				<field name="costPrice" />
+				<field name="gstRate" />
 			</panel>
 		</panel>
 	</form>
-	
+
+
+	<cards name="product-card" model="com.axelor.gst.db.Product"
+		title="Products">
+		<field name="name" />
+		<field name="image" />
+		<field name="code" />
+		<field name="hsbn" />
+		<field name="category" />
+		<field name="salePrice" />
+		<field name="costPrice" />
+		<field name="gstRate" />
+		<template>
+			<![CDATA[
+				<div class="span4 card-image">
+					<p style="text-align:center;vertical-align:middle">
+    					<img ng-src="{{$image('image', 'content')}}" style="width:100px;height:100px;border-radius:0%;" />
+    				</p>
+  				</div>
+  				<div class="span3">
+  					<p align="right">
+  						<strong>Product : </strong><br>
+	  					<strong>HSBN : </strong><br>
+	  					<strong>Category : </strong><br>
+	  					<strong>Sale Price : </strong><br>
+	  					<strong>Cost Price : </strong><br>
+	  					<strong>GST Rate : </strong>
+  					</p>
+  				</div>
+  				<div class="span5">
+  					<p>
+  						[{{code}}] {{name}}<br>
+	  					{{hsbn}}<br>
+	  					{{category.name}}<br>
+	  					Rs. {{salePrice}}<br>
+	  					Rs. {{costPrice}}<br>
+	  					{{gstRate}} %
+	  				</p>
+				</div>
+			]]>		
+		</template>
+	</cards>
+
 	<action-attrs name="action-product-attr-set-gstrate">
-		<attribute name="value:set" for="gstRate" expr="eval: category.gstRate" />
+		<attribute name="value:set" for="gstRate"
+			expr="eval: category.gstRate" />
 	</action-attrs>
-	
+
 </object-views>

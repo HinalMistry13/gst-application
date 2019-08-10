@@ -18,11 +18,11 @@
 		</string>
 		<integer name="qty" title="Quantity" default="1"/>
 		<decimal name="price" title="Price" />
-		<decimal name="netAmount" title="Net Amount" readonly="true" />
-		<decimal name="gstRate" title="GST Rate" readonly="true" />
-		<decimal name="igst" title="IGST" readonly="true" />
-		<decimal name="sgst" title="SGST" readonly="true" />
-		<decimal name="cgst" title="CGST" readonly="true" />
-		<decimal name="grossAmount" title="Gross Amount" readonly="true" />
+		<decimal name="netAmount" title="Net Amount" />
+		<decimal name="gstRate" title="GST Rate" />
+		<decimal name="igst" title="IGST" />
+		<decimal name="sgst" title="SGST" />
+		<decimal name="cgst" title="CGST" />
+		<decimal name="grossAmount" title="Gross Amount" />
 	</entity>
 </domain-models>

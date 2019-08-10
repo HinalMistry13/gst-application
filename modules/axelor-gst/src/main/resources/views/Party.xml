@@ -8,7 +8,8 @@
 		<option value="company">Company</option>
 	</selection>
 
-	<grid model="com.axelor.gst.db.Party" title="Party"	name="party-grid">
+	<grid model="com.axelor.gst.db.Party" title="Party"
+		name="party-grid">
 		<field name="reference" title="Reference" />
 		<field name="name" title="Name" />
 		<field name="type" title="Type" />
@@ -19,14 +20,15 @@
 		<field name="address" title="Address" />
 	</grid>
 
-	<form model="com.axelor.gst.db.Party" title="Party"	name="party-form">
+	<form model="com.axelor.gst.db.Party" title="Party"
+		name="party-form">
 		<panel title="Overview">
 			<field name="reference" readonly="true" showIf="id" />
 			<field name="name" required="true" />
 			<field name="type" required="true" />
-			<field name="gstIn" min="15" max="15"/>
-			<field name="customer" widget="boolean-switch" colSpan="3"/>
-			<field name="supplier" widget="boolean-switch" colSpan="3"/>
+			<field name="gstIn" min="15" max="15" />
+			<field name="customer" widget="boolean-switch" colSpan="3" />
+			<field name="supplier" widget="boolean-switch" colSpan="3" />
 		</panel>
 		<panel title="Contacts">
 			<field name="contact" showTitle="false" colSpan="12">
@@ -54,5 +56,39 @@
 			</field>
 		</panel>
 	</form>
+
+	<cards name="party-card" model="com.axelor.gst.db.Party" title="Party">
+		<field name="name" />
+		<field name="type" />
+		<field name="contact" />
+		<field name="address" />
+		<field name="customer" />
+		<field name="supplier" />
+		<template>
+			<![CDATA[
+				<div class="span3 card-image">
+    				<img src="img/user.png">
+    				<strong>{{name}}<br>({{type}})<br></strong>
+  				</div>
+  				<div class="span5">
+  					<contact>
+  						<div data-ng-repeat="c in contact">
+  							<strong>{{c.name}}</strong><br>
+  							<strong><i class='fa fa-envelope-o'></i> : </strong> {{c.primaryEmail}}<br>
+  							<strong><i class="fa fa-phone"></i> : </strong> {{c.primaryPhone}}<br><br>
+  						</div>	
+  					</contact>
+  				</div>
+  				<div class="span4">
+  					<address>
+  						<div data-ng-repeat="a in address">
+  							<strong>{{a.type}} Address : </strong><br>
+  							{{a.line1}}, {{a.city.name}}, {{a.state.name}}, {{a.country.name}}, {{a.pincode}}.<br>
+  						</div>
+  					</address>
+				</div>
+			]]>		
+		</template>
+	</cards>
 
 </object-views>

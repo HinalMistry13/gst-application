@@ -15,4 +15,11 @@ public class InvoiceController {
 		invoice = invoiceService.calculateGST(invoice);
 		response.setValues(invoice);
 	}
+	
+	public void changeGstToZero(ActionRequest request, ActionResponse response) {
+		Invoice invoice = request.getContext().asType(Invoice.class);
+		invoice = invoiceService.changeGstAmount(invoice);
+		response.setValues(invoice);
+	}
+
 }

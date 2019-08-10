@@ -24,12 +24,12 @@
 		<panel>		
 			<field name="status" readonly="true" widget="nav-select" colSpan="9"/>
 			<field name="reference" readonly="true" showIf="id" colSpan="3"/>
-			<field name="company" required="true" />
+			<field name="company" required="true" onChange="action-invoice-item-method-calculate-amount"/>
 			<field name="invoiceDate" colSpan="4"/>
 			<field name="priority" colSpan="2"/>
-			<field name="party" required="true" onChange="action-invoice-attr-set-party-contact"/>
-			<field name="partyContact"/>
-			<field name="invoiceAddress" required="true" onSelect="action-invoice-attr-invoice-address"/>
+			<field name="party" required="true" onChange="action-invoice-attr-set-party-contact,action-invoice-attr-set-first-element"/>
+			<field name="partyContact" onSelect="action-invoice-attr-set-party-contact"/>
+			<field name="invoiceAddress" required="true" onSelect="action-invoice-attr-invoice-address" onChange="action-invoice-item-method-calculate-amount"/>
 			<field name="shippingAddress" onSelect="action-invoice-attr-shipping-address"/>
 			<field name="sameAddress" title="Use Invoice Address as Shipping Address" onChange="action-invoice-attr-set-shipping"/>
 		</panel>
@@ -58,13 +58,46 @@
 			<field name="price" colSpan="4" readonly="true"/>
 			<field name="hsbn" />
 			<field name="netAmount" readonly="true" />
-			<field name="gstRate" readonly="true" />
+			<field name="gstRate" />
 			<field name="igst" readonly="true" />
 			<field name="sgst" readonly="true" />
 			<field name="cgst" readonly="true" />
 			<field name="grossAmount" readonly="true" />
 		</panel>
 	</form>
+	
+	<kanban name="invoice-kanban" title="Invoice" model="com.axelor.gst.db.Invoice" columnBy="status" sequenceBy="priority">
+		<field name="status"/>
+		<field name="company"/>
+		<field name="reference"/>
+		<field name="invoiceDate"/>
+		<field name="priority" />
+		<field name="party"/>
+		<field name="partyContact"/>
+		<field name="invoiceAddress"/>
+		<field name="shippingAddress"/>
+		<field name="netAmount" />
+		<field name="netIGST" />
+		<field name="netCGST" />
+		<field name="netSGST" />
+		<field name="grossAmount" />
+		<field name="invoiceItems"/>
+		<template>
+			<![CDATA[
+				<h4>{{reference}} ({{party.name}})</h4>
+				<div class="card-body">
+					<b>Company : </b>{{company.name}}<br>
+					<b>Party Contact: </b>{{partyContact.name}}<br>
+					<b>Invoice Address : </b>{{invoiceAddress.line1}}<br>
+					<b>Shipping Address : </b>{{shippingAddress.line1}}<br>
+					<b>Gross Amount : </b>{{grossAmount}}
+				</div>
+				<div class="card-footer">
+					<i class='fa fa-clock-o'></i> <span>{{invoiceDate|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+    			</div>
+			]]>
+		</template>
+	</kanban>
 	
 	<action-attrs name="action-invoice-attr-status-validated">
 		<attribute name="value" for="status" expr="VALIDATED"/>
@@ -97,8 +130,11 @@
 	
 	<action-attrs name="action-invoice-attr-set-party-contact">
 		<attribute name="domain" for="partyContact" expr="eval: &quot;self.id IN (${party?.contact?.collect{it.id}?.join(',')}) AND self.type='primary' &quot;"/>
-		<attribute name="value" for="partyContact" expr="eval: party?.contact?.first()" />
-		<attribute name="value" for="invoiceAddress" expr="eval: party?.address?.first()"/>
+	</action-attrs>
+	
+	<action-attrs name="action-invoice-attr-set-first-element">
+		<attribute name="value" for="partyContact" expr="" />
+		<attribute name="value" for="invoiceAddress" expr=""/>
 	</action-attrs>
 	
 	<action-method name="action-invoice-item-method-calculate-amount">
@@ -106,6 +142,23 @@
 	</action-method>
 	
 	<action-validate name="test-fun">
-		<notify message="Invoice line call"/>
+		<notify message="eval:party?.address?.any{it.type == 'defualt'}"/>
 	</action-validate>
+	
+<!-- 	<action-attrs name="action-invoice-attr-set-gst-zero-onchange"> -->
+<!-- 		<attribute name="value" for="netAmount" expr="eval:0.0"/> -->
+<!-- 		<attribute name="value" for="netIGST" expr="eval:0.0"/> -->
+<!-- 		<attribute name="value" for="netSGST" expr="eval:0.0"/> -->
+<!-- 		<attribute name="value" for="netCGST" expr="eval:0.0"/> -->
+<!-- 		<attribute name="value" for="grossAmount" expr="eval:0.0"/> -->
+<!-- 		<attribute name="value" for="invoiceItems?.each{it.netAmount}" expr="eval:invoiceItems?.each{it.netAmount}"/> -->
+<!-- 		<attribute name="value" for="invoiceItems?.each{it.igst}" expr="eval:invoiceItems?.each{it.igst=0.0}"/> -->
+<!-- 		<attribute name="value" for="invoiceItems?.collect{it.sgst}" expr="eval:invoiceItems?.collect{it.sgst=0.0}"/> -->
+<!-- 		<attribute name="value" for="invoiceItems?.collect{it.cgst}" expr="eval:invoiceItems?.collect{it.cgst=0.0}"/> -->
+<!-- 		<attribute name="value" for="invoiceItems?.collect{it.grossAmount}" expr="eval:invoiceItems?.collect{it.grossAmount=0.0}"/> -->
+<!-- 	</action-attrs> -->
+
+	<action-method name="action-invoice-method-set-gst-zero-onchange">
+		<call class="com.axelor.gst.controller.InvoiceController" method="changeGstToZero"/>		
+	</action-method>
 </object-views>

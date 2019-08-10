@@ -16,7 +16,7 @@
 	<entity name="Invoice">
 		<enum name="status" ref="InvoiceStatus" title="Status" readonly="true"/>
 		<many-to-one name="company" ref="com.axelor.gst.db.Company" required="true"/>
-		<string name="reference" title="Reference" readonly="true"/>
+		<string name="reference" title="Reference"/>
 		<datetime name="invoiceDate" title="Date"/>
 		<integer name="priority"/>
 		<many-to-one name="party" ref="com.axelor.gst.db.Party" required="true"/>
@@ -24,11 +24,11 @@
 		<many-to-one name="invoiceAddress" ref="com.axelor.gst.db.Address" required="true"/>
 		<many-to-one name="shippingAddress" ref="com.axelor.gst.db.Address"/>
 		<boolean name="sameAddress" transient="true" default="true"/>
-		<decimal name="netAmount" readonly="true"/>
-		<decimal name="netIGST" readonly="true"/>
-		<decimal name="netCGST" readonly="true"/>
-		<decimal name="netSGST" readonly="true"/>
-		<decimal name="grossAmount" readonly="true"/>
+		<decimal name="netAmount"/>
+		<decimal name="netIGST" />
+		<decimal name="netCGST" />
+		<decimal name="netSGST" />
+		<decimal name="grossAmount"/>
 		<one-to-many name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" mappedBy="invoice"/>
 	
 		<extra-code>
