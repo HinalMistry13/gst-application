@@ -78,8 +78,7 @@
 	</cards>
 
 	<action-attrs name="action-product-attr-set-gstrate">
-		<attribute name="value:set" for="gstRate"
-			expr="eval: category.gstRate" />
+		<attribute name="value:set" for="gstRate" expr="eval: category.gstRate" />
 	</action-attrs>
 
 </object-views>

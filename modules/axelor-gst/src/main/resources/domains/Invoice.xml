@@ -6,15 +6,8 @@
 
 	<module package="com.axelor.gst.db" name="gst" />
 
-	<enum name="InvoiceStatus">
-		<item name="DRAFT" value="draft" />
-		<item name="VALIDATED" value="validated" />
-		<item name="PAID" value="paid" />
-		<item name="CANCELED" value="canceled" />
-	</enum>
-
 	<entity name="Invoice">
-		<enum name="status" ref="InvoiceStatus" title="Status" readonly="true"/>
+		<string name="status" selection="com.axelor.gst.invoice.status"  title="Status" readonly="true"/>
 		<many-to-one name="company" ref="com.axelor.gst.db.Company" required="true"/>
 		<string name="reference" title="Reference"/>
 		<datetime name="invoiceDate" title="Date"/>
@@ -25,9 +18,9 @@
 		<many-to-one name="shippingAddress" ref="com.axelor.gst.db.Address"/>
 		<boolean name="sameAddress" transient="true" default="true"/>
 		<decimal name="netAmount"/>
-		<decimal name="netIGST" />
-		<decimal name="netCGST" />
-		<decimal name="netSGST" />
+		<decimal name="netIgst" />
+		<decimal name="netCgst" />
+		<decimal name="netSgst" />
 		<decimal name="grossAmount"/>
 		<one-to-many name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" mappedBy="invoice"/>
 	

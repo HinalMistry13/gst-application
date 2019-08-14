@@ -25,10 +25,17 @@
 			<field name="line1" required="true"/>
 			<field name="line2" />
 			<field name="city" required="true"/>
-			<field name="state"/>
+			<field name="state" />
 			<field name="country" required="true"/>
 			<field name="pincode"/>
 		</panel>
 	</form>
 	
+<!-- 	<action-attrs name="action-address-attr-set-state-country-wise"> -->
+<!-- 		<attribute name="value" for="state" expr="eval: qout; self.country=:country.name qout;"/> -->
+<!-- 	</action-attrs> -->
+	
+<!-- 	<action-validate name="test"> -->
+<!-- 		<notify message="eval:country.name"/> -->
+<!-- 	</action-validate> -->
 </object-views>

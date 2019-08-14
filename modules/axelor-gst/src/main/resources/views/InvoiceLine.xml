@@ -26,7 +26,7 @@
 			<field name="qty" default="1"/>
 			<field name="price" />
 			<field name="netAmount" readonly="true" />
-			<field name="gstRate" readonly="true" />
+			<field name="gstRate" />
 			<field name="igst" readonly="true" />
 			<field name="sgst" readonly="true" />
 			<field name="cgst" readonly="true" />
@@ -35,8 +35,14 @@
 	</form>
 	
 	<action-attrs name="action-invoiceline-attr-get-product-data">
-		<attribute name="value:set" for="gstRate" expr="eval: product.gstRate"/>
-<!-- 		<attribute name="value:set" for="item" expr="eval: '['+product.code+'] '+product.name"/> -->
-		<attribute name="value:set" for="price" expr="eval: product.salePrice"/>
+		<attribute name="value:set" for="gstRate" expr="eval: product.gstRate" if="product"/>
+		<attribute name="value:set" for="price" expr="eval: product.salePrice" if="product"/>
+		<attribute name="value:set" for="gstRate" expr="0.00" if="!product"/>
+		<attribute name="value:set" for="price" expr="0.00" if="!product"/>
+		<attribute name="value:set" for="hsbn" expr="" if="!product"/>
 	</action-attrs>
+	
+	<action-method name="action-invoiceline-method-calculate-amount">
+		<call class="com.axelor.gst.controller.InvoiceLineController" method="calculate"/>
+	</action-method>
 </object-views>

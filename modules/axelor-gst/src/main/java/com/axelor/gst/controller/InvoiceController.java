@@ -13,13 +13,11 @@ public class InvoiceController {
 	public void calculate(ActionRequest request,ActionResponse response) {
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		invoice = invoiceService.calculateGST(invoice);
-		response.setValues(invoice);
+		response.setValue("invoiceItems", invoice.getInvoiceItems());
+		response.setValue("netAmount", invoice.getNetAmount());
+		response.setValue("netIgst", invoice.getNetIgst());
+		response.setValue("netCgst", invoice.getNetCgst());
+		response.setValue("netSgst", invoice.getNetSgst());
+		response.setValue("grossAmount", invoice.getGrossAmount());
 	}
-	
-	public void changeGstToZero(ActionRequest request, ActionResponse response) {
-		Invoice invoice = request.getContext().asType(Invoice.class);
-		invoice = invoiceService.changeGstAmount(invoice);
-		response.setValues(invoice);
-	}
-
 }

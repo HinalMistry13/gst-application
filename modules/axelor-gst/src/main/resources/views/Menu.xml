@@ -72,28 +72,32 @@
 	   	<menuitem name="menu-invoice-root-draft" parent="menu-invoice-root" title="Draft Invoices" action="action.invoice.draft"/>
 	  	<action-view name="action.invoice.draft" title="Draft Invoices" model="com.axelor.gst.db.Invoice">
 	    	<view type="grid" name="invoice-grid" />
-			<domain>self.status = :status</domain>
+			<view type="form" name="invoice-form"/>
+	    	<domain>self.status = :status</domain>
 			<context name="status" expr="draft"/>
 		</action-view>
 	   	
    		<menuitem name="menu-invoice-root-validated" parent="menu-invoice-root" title="Validated Invoices" action="action.invoice.validated"/>
 	  	<action-view name="action.invoice.validated" title="Validated Invoices" model="com.axelor.gst.db.Invoice">
 	    	<view type="grid" name="invoice-grid" />
-			<domain>self.status = :status</domain>
+			<view type="form" name="invoice-form"/>
+	    	<domain>self.status = :status</domain>
 			<context name="status" expr="validated"/>
 		</action-view>
 	   	
 	   	<menuitem name="menu-invoice-root-paid" parent="menu-invoice-root" title="Paid Invoices" action="action.invoice.paid"/>
 	  	<action-view name="action.invoice.paid" title="Paid Invoices" model="com.axelor.gst.db.Invoice">
 	    	<view type="grid" name="invoice-grid" />
-			<domain>self.status = :status</domain>
+			<view type="form" name="invoice-form"/>
+	    	<domain>self.status = :status</domain>
 			<context name="status" expr="paid"/>
 		</action-view>
 	   	
 	   	<menuitem name="menu-invoice-root-canceled" parent="menu-invoice-root" title="Canceled Invoices" action="action.invoice.canceled"/>
 	  	<action-view name="action.invoice.canceled" title="Canceled Invoices" model="com.axelor.gst.db.Invoice">
 	    	<view type="grid" name="invoice-grid" />
-			<domain>self.status = :status</domain>
+			<view type="form" name="invoice-form"/>
+	    	<domain>self.status = :status</domain>
 			<context name="status" expr="canceled"/>
 		</action-view>
 	   	
@@ -118,10 +122,10 @@
 	    	<view type="form" name="bank-account-form"/>
 		</action-view>
 	   	
-<!-- 	   	<menuitem name="menu-company-root-all" parent="menu-company-root" title="Company" action="action.company.all"/> -->
-<!-- 	  	<action-view name="action.company.all" title="Company" model="com.axelor.gst.db.Company"> -->
-<!-- 	    	<view type="grid" name="company-grid" /> -->
-<!-- 	    	<view type="form" name="company-form"/> -->
-<!-- 		</action-view> -->
+	   	<menuitem name="menu-sequence-root" parent="menu-company-root" title="Sequence" action="action.sequence.all"/>
+	  	<action-view name="action.sequence.all" title="Sequence" model="com.axelor.gst.db.Sequence">
+	    	<view type="grid" name="sequence-grid" />
+	    	<view type="form" name="sequence-form"/>
+		</action-view>
 	   	
 </object-views>

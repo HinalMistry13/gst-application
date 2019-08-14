@@ -2,6 +2,13 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
 	
+	<selection name="com.axelor.gst.invoice.status">
+		<option value="draft">Draft</option>
+		<option value="validated">Validated</option>
+		<option value="paid">Paid</option>
+		<option value="canceled">Canceled</option>
+	</selection>
+	
 	<grid model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-grid">
 		<field name="status" title="Status"/>
 		<field name="company" title="Company"/>
@@ -13,9 +20,9 @@
 		<field name="invoiceAddress" title="Invoice Address"/>
 		<field name="shippingAddress" title="Shipping Address"/>
 		<field name="netAmount" title="Net Amount"/>
-		<field name="netIGST" title="Net IGST"/>
-		<field name="netCGST" title="Net CGST"/>
-		<field name="netSGST" title="Net SGST"/>
+		<field name="netIgst" title="Net IGST"/>
+		<field name="netCgst" title="Net CGST"/>
+		<field name="netSgst" title="Net SGST"/>
 		<field name="grossAmount" title="Gross Amount"/>
 		<field name="invoiceItems" title="Invoice Items"/>
 	</grid>
@@ -34,27 +41,27 @@
 			<field name="sameAddress" title="Use Invoice Address as Shipping Address" onChange="action-invoice-attr-set-shipping"/>
 		</panel>
 		<panel sidebar="true">
-			<button name="btnValid" title="Validated" colSpan="12" onClick="action-invoice-attr-status-validated"/>
-			<button name="btnPaid" title="Paid" colSpan="12" onClick="action-invoice-attr-status-paid" showIf="status == 'VALIDATED'"/>
-			<button name="btnCancel" title="Canceled" colSpan="12" onClick="action-invoice-attr-status-canceled" showIf="status == 'VALIDATED'"/>
+			<button name="validateButton" title="Validated" colSpan="12" onClick="save,action-invoice-attr-status-validated" showIf="status == 'draft'" icon="fa-check-circle"/>
+			<button name="paidButton" title="Paid" colSpan="12" onClick="action-invoice-attr-status-paid" showIf="status == 'validated'" icon="fa-receipt"/>
+			<button name="cancelButton" title="Canceled" colSpan="12" onClick="action-invoice-attr-status-canceled" css="btn-danger" icon="fa-times-circle"/>
 		</panel>
 		<panel>
-			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12" form-view="invoice-item-popup-form"/>
+			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12" form-view="invoice-item-popup-form" onChange="action-invoice-item-method-calculate-amount"/>
 		</panel>
 		<panel>
 			<field name="netAmount" title="Net Amount" readonly="true"/>
-			<field name="netIGST" title="Net IGST" readonly="true"/>
-			<field name="netCGST" title="Net CGST" readonly="true"/>
-			<field name="netSGST" title="Net SGST" readonly="true"/>
+			<field name="netIgst" title="Net IGST" readonly="true"/>
+			<field name="netCgst" title="Net CGST" readonly="true"/>
+			<field name="netSgst" title="Net SGST" readonly="true"/>
 			<field name="grossAmount" title="Gross Amount" readonly="true"/>
 		</panel>
 	</form>
 	
 	<form model="com.axelor.gst.db.InvoiceLine" title="Invoice Items" name="invoice-item-popup-form">
 		<panel>
-			<field name="product" onChange="action-invoiceline-attr-get-product-data"/>
+			<field name="product" onChange="action-invoiceline-attr-get-product-data,action-invoiceline-method-calculate-amount"/>
 <!-- 			<field name="item" required="true"/> -->
-			<field name="qty" default="1" colSpan="2" min="1"/>
+			<field name="qty" default="1" colSpan="2" min="1" onChange="action-invoiceline-method-calculate-amount"/>
 			<field name="price" colSpan="4" readonly="true"/>
 			<field name="hsbn" />
 			<field name="netAmount" readonly="true" />
@@ -77,9 +84,9 @@
 		<field name="invoiceAddress"/>
 		<field name="shippingAddress"/>
 		<field name="netAmount" />
-		<field name="netIGST" />
-		<field name="netCGST" />
-		<field name="netSGST" />
+		<field name="netIgst" />
+		<field name="netCgst" />
+		<field name="netSgst" />
 		<field name="grossAmount" />
 		<field name="invoiceItems"/>
 		<template>
@@ -100,24 +107,24 @@
 	</kanban>
 	
 	<action-attrs name="action-invoice-attr-status-validated">
-		<attribute name="value" for="status" expr="VALIDATED"/>
+		<attribute name="value" for="status" expr="validated"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-status-paid">
-		<attribute name="value" for="status" expr="PAID"/>
+		<attribute name="value" for="status" expr="paid"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-status-canceled">
-		<attribute name="value" for="status" expr="CANCELED"/>
+		<attribute name="value" for="status" expr="canceled"/>
 	</action-attrs>
 	
 	<action-record name="action-invoice-record-default-record" model="com.axelor.gst.db.Invoice">
 		<field name="invoiceDate" expr="eval:__date__"/>
-		<field name="status" expr="DRAFT"/>
+		<field name="status" expr="draft"/>
 	</action-record>
 	
 	<action-attrs name="action-invoice-attr-set-shipping">
-		<attribute name="value:set" for="shippingAddress" expr="eval:invoiceAddress" if="sameAddress"/>
+		<attribute name="value:set" for="shippingAddress" expr="eval:invoiceAddress" if="sameAddress &amp;&amp; invoiceAddress.type=='default'"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-invoice-address">
@@ -133,17 +140,15 @@
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-set-first-element">
-		<attribute name="value" for="partyContact" expr="" />
-		<attribute name="value" for="invoiceAddress" expr=""/>
+		<attribute name="value" for="partyContact" expr="eval: party?.contact?.find{it.type=='primary'}"/>
+		<attribute name="value" for="invoiceAddress" expr="eval: party?.address?.find{it.type != 'shipping'}"/>
+		<attribute name="value" for="shippingAddress" expr="eval: party?.address?.find{it.type != 'invoice'}"/>
+		<attribute name="value" for="sameAddress" expr="eval:false"/>	
 	</action-attrs>
 	
 	<action-method name="action-invoice-item-method-calculate-amount">
-		<call class="com.axelor.gst.controller.InvoiceController" method="calculate"/>
+		<call class="com.axelor.gst.controller.InvoiceController" method="calculate" />
 	</action-method>
-	
-	<action-validate name="test-fun">
-		<notify message="eval:party?.address?.any{it.type == 'defualt'}"/>
-	</action-validate>
 	
 <!-- 	<action-attrs name="action-invoice-attr-set-gst-zero-onchange"> -->
 <!-- 		<attribute name="value" for="netAmount" expr="eval:0.0"/> -->
@@ -151,14 +156,11 @@
 <!-- 		<attribute name="value" for="netSGST" expr="eval:0.0"/> -->
 <!-- 		<attribute name="value" for="netCGST" expr="eval:0.0"/> -->
 <!-- 		<attribute name="value" for="grossAmount" expr="eval:0.0"/> -->
-<!-- 		<attribute name="value" for="invoiceItems?.each{it.netAmount}" expr="eval:invoiceItems?.each{it.netAmount}"/> -->
+<!-- 		<attribute name="value" for="invoiceItems?.each{it.netAmount}" expr="eval:invoiceItems?.each{it.netAmount=0.0}"/> -->
 <!-- 		<attribute name="value" for="invoiceItems?.each{it.igst}" expr="eval:invoiceItems?.each{it.igst=0.0}"/> -->
 <!-- 		<attribute name="value" for="invoiceItems?.collect{it.sgst}" expr="eval:invoiceItems?.collect{it.sgst=0.0}"/> -->
 <!-- 		<attribute name="value" for="invoiceItems?.collect{it.cgst}" expr="eval:invoiceItems?.collect{it.cgst=0.0}"/> -->
 <!-- 		<attribute name="value" for="invoiceItems?.collect{it.grossAmount}" expr="eval:invoiceItems?.collect{it.grossAmount=0.0}"/> -->
 <!-- 	</action-attrs> -->
 
-	<action-method name="action-invoice-method-set-gst-zero-onchange">
-		<call class="com.axelor.gst.controller.InvoiceController" method="changeGstToZero"/>		
-	</action-method>
 </object-views>
