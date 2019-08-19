@@ -20,4 +20,5 @@ public class InvoiceController {
 		response.setValue("netSgst", invoice.getNetSgst());
 		response.setValue("grossAmount", invoice.getGrossAmount());
 	}
+
 }

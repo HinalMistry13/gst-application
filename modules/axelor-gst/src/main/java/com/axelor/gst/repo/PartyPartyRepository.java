@@ -2,6 +2,8 @@ package com.axelor.gst.repo;
 
 import java.util.Map;
 
+import javax.persistence.PersistenceException;
+
 import com.axelor.gst.db.Party;
 import com.axelor.gst.db.Sequence;
 import com.axelor.gst.db.repo.PartyRepository;
@@ -29,9 +31,16 @@ public class PartyPartyRepository extends PartyRepository{
 	
 	@Override
 	public Party save(Party entity) {
-		MetaModel model = Beans.get(MetaModelRepository.class).findByName(entity.getClass().getSimpleName());
-		Sequence partySequence = sequenceService.getSequenceByModel(model);
-		entity.setReference(partySequence.getNextNumber());
-		return super.save(entity);
+		try {
+			MetaModel model = Beans.get(MetaModelRepository.class).findByName(entity.getClass().getSimpleName());
+			Sequence partySequence = sequenceService.getSequenceByModel(model);
+			if(entity.getReference()==null) {
+				entity.setReference(partySequence.getNextNumber());
+				sequenceService.updateNextIndex(partySequence);
+			}
+			return super.save(entity);
+		}catch (Exception e) {
+			throw new PersistenceException("Model is not found for Sequence '"+entity.getClass().getSimpleName()+"'");
+		}
 	}
 }

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.7.0.v201706222054</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">142</property>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source" id="84">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:5432/axelorGST</property>
+            <property name="odaUser">axelor</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">YXhlbG9y</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="Invoice Data Set" id="85">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">invoice_date</property>
+                    <text-property name="displayName">invoice_date</text-property>
+                    <text-property name="heading">invoice_date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">reference</property>
+                    <text-property name="displayName">reference</text-property>
+                    <text-property name="heading">reference</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_amount</property>
+                    <text-property name="displayName">net_amount</text-property>
+                    <text-property name="heading">net_amount</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_igst</property>
+                    <text-property name="displayName">net_igst</text-property>
+                    <text-property name="heading">net_igst</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_cgst</property>
+                    <text-property name="displayName">net_cgst</text-property>
+                    <text-property name="heading">net_cgst</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">net_sgst</property>
+                    <text-property name="displayName">net_sgst</text-property>
+                    <text-property name="heading">net_sgst</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">gross_amount</property>
+                    <text-property name="displayName">gross_amount</text-property>
+                    <text-property name="heading">gross_amount</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">pname</property>
+                    <text-property name="displayName">pname</text-property>
+                    <text-property name="heading">pname</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">cname</property>
+                    <text-property name="displayName">cname</text-property>
+                    <text-property name="heading">cname</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">invoice_date</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">reference</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">net_amount</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">net_igst</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">net_cgst</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">net_sgst</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">gross_amount</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">pname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">cname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <xml-property name="queryText"><![CDATA[select inv.*, party.name as pname, company.name as cname
+from gst_invoice inv 
+left join gst_company com on inv.company = com.id
+left join gst_party party on inv.party = party.id
+where inv.id=7;]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="4">
+            <property name="height">2.4859154929577465in</property>
+            <column id="5"/>
+            <column id="6"/>
+            <column id="7"/>
+            <row id="8">
+                <property name="height">0.795774647887324in</property>
+                <cell id="9">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <label id="20">
+                        <property name="fontSize">24pt</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">INVOICE</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="12">
+                <property name="verticalAlign">middle</property>
+                <property name="height">1.352112676056338in</property>
+                <cell id="13">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <grid id="66">
+                        <property name="width">7.922535211267606in</property>
+                        <column id="67">
+                            <property name="width">15%</property>
+                        </column>
+                        <column id="68">
+                            <property name="width">35%</property>
+                        </column>
+                        <column id="69">
+                            <property name="width">15%</property>
+                        </column>
+                        <column id="70">
+                            <property name="width">35%</property>
+                        </column>
+                        <row id="71">
+                            <cell id="72">
+                                <label id="81">
+                                    <property name="fontSize">14pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <text-property name="text">Date</text-property>
+                                </label>
+                            </cell>
+                            <cell id="73"/>
+                            <cell id="74">
+                                <label id="83">
+                                    <property name="fontSize">14pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <text-property name="text">Party</text-property>
+                                </label>
+                            </cell>
+                            <cell id="75"/>
+                        </row>
+                        <row id="76">
+                            <cell id="77">
+                                <label id="82">
+                                    <property name="fontSize">14pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <text-property name="text">Reference</text-property>
+                                </label>
+                            </cell>
+                            <cell id="78"/>
+                            <cell id="79"/>
+                            <cell id="80"/>
+                        </row>
+                    </grid>
+                    <table id="21">
+                        <column id="49"/>
+                        <column id="50"/>
+                        <column id="51"/>
+                        <column id="52"/>
+                        <column id="53"/>
+                        <column id="54"/>
+                        <column id="55"/>
+                        <column id="56"/>
+                        <header>
+                            <row id="22">
+                                <cell id="23">
+                                    <label id="57">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">Item</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="24">
+                                    <label id="58">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">Qty</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="25">
+                                    <label id="59">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">Price</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="26">
+                                    <label id="60">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">Net Amount</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="27">
+                                    <label id="61">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">IGST</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="28">
+                                    <label id="62">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">SGST</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="29">
+                                    <label id="63">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">CGST</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="30">
+                                    <label id="64">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">Gross Amount</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                        </header>
+                        <detail>
+                            <row id="31">
+                                <property name="height">0.22535211267605634in</property>
+                                <cell id="32"/>
+                                <cell id="33"/>
+                                <cell id="34"/>
+                                <cell id="35"/>
+                                <cell id="36"/>
+                                <cell id="37"/>
+                                <cell id="38"/>
+                                <cell id="39"/>
+                            </row>
+                        </detail>
+                        <footer>
+                            <row id="40">
+                                <cell id="41">
+                                    <label id="65">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">center</property>
+                                        <text-property name="text">Total</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="42"/>
+                                <cell id="43"/>
+                                <cell id="44"/>
+                                <cell id="45"/>
+                                <cell id="46"/>
+                                <cell id="47"/>
+                                <cell id="48"/>
+                            </row>
+                        </footer>
+                    </table>
+                </cell>
+            </row>
+            <row id="16">
+                <property name="height">0.3380281690140845in</property>
+                <cell id="17">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                </cell>
+            </row>
+        </grid>
+    </body>
+</report>

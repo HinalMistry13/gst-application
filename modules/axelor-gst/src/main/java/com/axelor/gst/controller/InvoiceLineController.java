@@ -1,5 +1,7 @@
 package com.axelor.gst.controller;
 
+import java.util.List;
+
 import com.axelor.gst.db.Address;
 import com.axelor.gst.db.Company;
 import com.axelor.gst.db.InvoiceLine;
@@ -12,7 +14,7 @@ public class InvoiceLineController {
 
 	@Inject InvoiceLineService invoiceLineService;
 	
-	public void calculate(ActionRequest request,ActionResponse response) {
+	public void calculate(ActionRequest request, ActionResponse response) {
 		InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
 		Company company = (Company) request.getContext().getParent().get("company");
 		Address invoiceAddress = (Address) request.getContext().getParent().get("invoiceAddress");
@@ -27,5 +29,15 @@ public class InvoiceLineController {
 		response.setValue("sgst", invoiceLine.getSgst());
 		response.setValue("cgst", invoiceLine.getCgst());
 		response.setValue("grossAmount", invoiceLine.getGrossAmount());
+	}
+	
+	public void getProductsByIds(ActionRequest request, ActionResponse response) {
+		@SuppressWarnings("unchecked")
+		List<Integer> ids = (List<Integer>) request.getContext().get("products");
+		List<InvoiceLine> items = invoiceLineService.getInvoiceItemsById(ids);
+		for(InvoiceLine line : items) {
+			System.out.println(line);
+		}
+		response.setValue("invoiceItems", items);
 	}
 }

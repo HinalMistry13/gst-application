@@ -7,4 +7,5 @@ public interface SequenceService {
 
 	public String getNextIndex(Sequence sequence);
 	public Sequence getSequenceByModel(MetaModel model);
+	public void updateNextIndex(Sequence sequence);
 }

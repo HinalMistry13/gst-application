@@ -5,6 +5,10 @@
 
 	<grid model="com.axelor.gst.db.Product" title="Product"
 		name="product-grid">
+		<toolbar>
+			<button name="invoiceButton" title="Create Invoice" onClick="action-product-view-invoice-form"/>
+			<button name="printButton" title="Print"/>
+		</toolbar>
 		<field name="image" title="Image" widget="image" />
 		<field name="name" title="Name" />
 		<field name="code" title="Code" />
@@ -34,7 +38,6 @@
 			</panel>
 		</panel>
 	</form>
-
 
 	<cards name="product-card" model="com.axelor.gst.db.Product"
 		title="Products">
@@ -81,4 +84,8 @@
 		<attribute name="value:set" for="gstRate" expr="eval: category.gstRate" />
 	</action-attrs>
 
+	<action-view name="action-product-view-invoice-form" title="Product Invoice" model="com.axelor.gst.db.Invoice">
+		<view type="form" name="invoice-form"/>
+		<context name="products" expr="eval:_ids"/>
+	</action-view>
 </object-views>

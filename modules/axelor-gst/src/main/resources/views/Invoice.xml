@@ -27,7 +27,10 @@
 		<field name="invoiceItems" title="Invoice Items"/>
 	</grid>
 	
-	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form" onNew="action-invoice-record-default-record" onSave="action-invoice-item-method-calculate-amount">
+	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form" onNew="action-invoice-group-onnew-actions" onSave="action-invoice-attr-status-validated,action-invoice-item-method-calculate-amount">
+		<toolbar>
+			<button name="invoicePrintbutton" title="Print" icon="fa-print" onClick=""/>
+		</toolbar>
 		<panel>		
 			<field name="status" readonly="true" widget="nav-select" colSpan="9"/>
 			<field name="reference" readonly="true" showIf="id" colSpan="3"/>
@@ -106,6 +109,11 @@
 		</template>
 	</kanban>
 	
+	<action-group name="action-invoice-group-onnew-actions">
+		<action name="action-invoice-record-default-record"/>
+		<action name="action-invoice-method-set-invoice-items" if="products!=null"/>
+	</action-group>
+	
 	<action-attrs name="action-invoice-attr-status-validated">
 		<attribute name="value" for="status" expr="validated"/>
 	</action-attrs>
@@ -140,7 +148,7 @@
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-set-first-element">
-		<attribute name="value" for="partyContact" expr="eval: party?.contact?.find{it.type=='primary'}"/>
+		<attribute name="value" for="partyContact" expr="eval: party?.contact?.find{it.type == 'primary'}"/>
 		<attribute name="value" for="invoiceAddress" expr="eval: party?.address?.find{it.type != 'shipping'}"/>
 		<attribute name="value" for="shippingAddress" expr="eval: party?.address?.find{it.type != 'invoice'}"/>
 		<attribute name="value" for="sameAddress" expr="eval:false"/>	
@@ -162,5 +170,8 @@
 <!-- 		<attribute name="value" for="invoiceItems?.collect{it.cgst}" expr="eval:invoiceItems?.collect{it.cgst=0.0}"/> -->
 <!-- 		<attribute name="value" for="invoiceItems?.collect{it.grossAmount}" expr="eval:invoiceItems?.collect{it.grossAmount=0.0}"/> -->
 <!-- 	</action-attrs> -->
-
+	
+	<action-method name="action-invoice-method-set-invoice-items">
+		<call class="com.axelor.gst.controller.InvoiceLineController" method="getProductsByIds"/>
+	</action-method>
 </object-views>
