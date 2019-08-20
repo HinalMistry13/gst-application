@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
+
+	<chart name="chart-customer-per-state"
+		title="Customer per state : Pie chart">
+		<dataset type="sql"> 
+			<![CDATA[
+				select 
+					state.name as state_name, 
+					count(distinct party_addr.id) as party_count
+				from 
+					gst_state state
+				left join 
+					gst_address address on address.state = state.id
+				left join(
+					select 
+						party.id, 
+						pa.address as addr 
+					from 
+						gst_party party 
+					left join 
+						gst_party_address pa on party.id = pa.gst_party
+					where 
+						party.customer = true
+				) 
+					party_addr on address.id = party_addr.addr
+				group by 
+					state.name;
+			]]>
+		</dataset>
+		<category key="state_name" type="text"/>
+		<series key="party_count" groupBy="state_name" type="pie" />
+		<config name="percent" value="true"/>
+	</chart>
+</object-views>

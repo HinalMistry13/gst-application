@@ -11,6 +11,7 @@
 	
 	<grid model="com.axelor.gst.db.Address" title="Address" name="address-grid">
 		<field name="type" title="Address Type"/>
+		<field name="fullAddress" title="Full Address"/>
 		<field name="line1" title="Line 1" />
 		<field name="line2" title="Line 2" />
 		<field name="city" title="City" />

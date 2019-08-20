@@ -7,7 +7,7 @@
 		name="product-grid">
 		<toolbar>
 			<button name="invoiceButton" title="Create Invoice" onClick="action-product-view-invoice-form"/>
-			<button name="printButton" title="Print"/>
+			<button name="printButton" title="Print" onClick="action-invoice-method-set-filepath,action-product-report"/>
 		</toolbar>
 		<field name="image" title="Image" widget="image" />
 		<field name="name" title="Name" />
@@ -83,6 +83,11 @@
 	<action-attrs name="action-product-attr-set-gstrate">
 		<attribute name="value:set" for="gstRate" expr="eval: category.gstRate" />
 	</action-attrs>
+	
+	<action-report output="product${date}${time}" name="action-product-report" design="product_report.rptdesign">
+		<param name="ids" expr="eval:_ids.join(',')"/>
+		<param name="fpath" expr="eval:fpath"/>
+	</action-report>
 
 	<action-view name="action-product-view-invoice-form" title="Product Invoice" model="com.axelor.gst.db.Invoice">
 		<view type="form" name="invoice-form"/>

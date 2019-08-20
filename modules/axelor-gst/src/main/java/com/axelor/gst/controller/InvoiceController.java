@@ -1,5 +1,6 @@
 package com.axelor.gst.controller;
 
+import com.axelor.app.AppSettings;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.service.InvoiceService;
 import com.axelor.rpc.ActionRequest;
@@ -20,5 +21,8 @@ public class InvoiceController {
 		response.setValue("netSgst", invoice.getNetSgst());
 		response.setValue("grossAmount", invoice.getGrossAmount());
 	}
-
+	
+	public void getFilePath(ActionRequest request,ActionResponse response) {
+		request.getContext().put("fpath", AppSettings.get().get("file.upload.dir"));
+	}
 }

@@ -29,7 +29,7 @@
 	
 	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form" onNew="action-invoice-group-onnew-actions" onSave="action-invoice-attr-status-validated,action-invoice-item-method-calculate-amount">
 		<toolbar>
-			<button name="invoicePrintbutton" title="Print" icon="fa-print" onClick=""/>
+			<button name="invoicePrintbutton" title="Print" icon="fa-print" onClick="action-invoice-method-set-filepath,action-invoice-report"/>
 		</toolbar>
 		<panel>		
 			<field name="status" readonly="true" widget="nav-select" colSpan="9"/>
@@ -37,7 +37,7 @@
 			<field name="company" required="true" onChange="action-invoice-item-method-calculate-amount"/>
 			<field name="invoiceDate" colSpan="4"/>
 			<field name="priority" colSpan="2"/>
-			<field name="party" required="true" onChange="action-invoice-attr-set-party-contact,action-invoice-attr-set-first-element"/>
+			<field name="party" required="true" onChange="action-invoice-attr-set-party-contact,action-invoice-attr-set-first-element" domain="self.customer=true"/>
 			<field name="partyContact" onSelect="action-invoice-attr-set-party-contact"/>
 			<field name="invoiceAddress" required="true" onSelect="action-invoice-attr-invoice-address" onChange="action-invoice-item-method-calculate-amount"/>
 			<field name="shippingAddress" onSelect="action-invoice-attr-shipping-address"/>
@@ -158,18 +158,14 @@
 		<call class="com.axelor.gst.controller.InvoiceController" method="calculate" />
 	</action-method>
 	
-<!-- 	<action-attrs name="action-invoice-attr-set-gst-zero-onchange"> -->
-<!-- 		<attribute name="value" for="netAmount" expr="eval:0.0"/> -->
-<!-- 		<attribute name="value" for="netIGST" expr="eval:0.0"/> -->
-<!-- 		<attribute name="value" for="netSGST" expr="eval:0.0"/> -->
-<!-- 		<attribute name="value" for="netCGST" expr="eval:0.0"/> -->
-<!-- 		<attribute name="value" for="grossAmount" expr="eval:0.0"/> -->
-<!-- 		<attribute name="value" for="invoiceItems?.each{it.netAmount}" expr="eval:invoiceItems?.each{it.netAmount=0.0}"/> -->
-<!-- 		<attribute name="value" for="invoiceItems?.each{it.igst}" expr="eval:invoiceItems?.each{it.igst=0.0}"/> -->
-<!-- 		<attribute name="value" for="invoiceItems?.collect{it.sgst}" expr="eval:invoiceItems?.collect{it.sgst=0.0}"/> -->
-<!-- 		<attribute name="value" for="invoiceItems?.collect{it.cgst}" expr="eval:invoiceItems?.collect{it.cgst=0.0}"/> -->
-<!-- 		<attribute name="value" for="invoiceItems?.collect{it.grossAmount}" expr="eval:invoiceItems?.collect{it.grossAmount=0.0}"/> -->
-<!-- 	</action-attrs> -->
+	<action-report name="action-invoice-report" design="invoice_report.rptdesign" output="invoice-${date}${time}" format="pdf">
+		<param name="ids" expr="eval:__self__.id" />
+		<param name="fpath" expr="eval:fpath" />
+	</action-report>
+	
+	<action-method name="action-invoice-method-set-filepath">
+		<call class="com.axelor.gst.controller.InvoiceController" method="getFilePath"/>
+	</action-method>
 	
 	<action-method name="action-invoice-method-set-invoice-items">
 		<call class="com.axelor.gst.controller.InvoiceLineController" method="getProductsByIds"/>

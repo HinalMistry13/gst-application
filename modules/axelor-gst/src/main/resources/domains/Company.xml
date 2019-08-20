@@ -6,6 +6,13 @@
 	
 	<module package="com.axelor.gst.db" name="gst"/>
 	<entity name="Company">
+		<string name="fullAddress" title="Full Address" required="true" namecolumn="true">
+			<![CDATA[
+    			if (name == null || address == null)
+      				return null;
+    		    return name + " (" + address.getState().getName() + ")";
+    		]]>
+		</string>
 		<string name="name" title="Name" required="true" />
 		<many-to-one name="logo" ref="com.axelor.meta.db.MetaFile"/>
 		<one-to-many name="contact" ref="com.axelor.gst.db.Contact"/>

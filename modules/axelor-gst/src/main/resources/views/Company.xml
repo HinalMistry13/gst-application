@@ -5,6 +5,7 @@
 
 	<grid model="com.axelor.gst.db.Company" title="Company"
 		name="company-grid">
+		<field name="fullAddress" title="Full Address"/>
 		<field name="logo" title="Logo" widget="image" />
 		<field name="name" title="Name" />
 		<field name="contact" title="Contact" />

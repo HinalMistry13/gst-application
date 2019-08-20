@@ -128,4 +128,15 @@
 	    	<view type="form" name="sequence-form"/>
 		</action-view>
 	   	
+	<dashboard name="welcome.dashboard" title="Welcome!">
+	    <dashlet action="chart:chart-customer-per-state"/>
+  	</dashboard>
+  	
+  	<action-view name="welcome" title="Welcome!">
+	    <view type="dashboard" name="welcome.dashboard"/>
+	</action-view>
+	
+	<menuitem name="menu-dashboards" order="-101" title="Dashboards" icon="fa-dashboard" icon-background="blue"/>
+	
+	<menuitem name="menu-welcome" parent="menu-dashboards" title="Welcome!" action="welcome"/>
 </object-views>
