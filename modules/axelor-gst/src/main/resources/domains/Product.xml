@@ -8,11 +8,11 @@
 	<entity name="Product">
 		<string name="name" title="Name" required="true" />
 		<string name="code" title="Code" required="true" />
-		<string name="hsbn" />
-		<many-to-one name="category" ref="com.axelor.gst.db.ProductCategory"/>
+		<string name="hsbn" title="HSBN"/>
+		<many-to-one name="category" ref="com.axelor.gst.db.ProductCategory" title="Category"/>
 		<decimal name="salePrice" title="Sale Price" />
 		<decimal name="costPrice" title="Cost Price" />
-		<many-to-one name="image" ref="com.axelor.meta.db.MetaFile"/>
+		<many-to-one name="image" ref="com.axelor.meta.db.MetaFile" title="Image"/>
 		<decimal name="gstRate" title="GST Rate"/>
 	</entity>
 </domain-models>

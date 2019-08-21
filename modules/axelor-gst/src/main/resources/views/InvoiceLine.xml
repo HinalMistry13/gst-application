@@ -37,6 +37,7 @@
 	<action-attrs name="action-invoiceline-attr-get-product-data">
 		<attribute name="value:set" for="gstRate" expr="eval: product.gstRate" if="product"/>
 		<attribute name="value:set" for="price" expr="eval: product.salePrice" if="product"/>
+		<attribute name="value:set" for="qty" expr="1"/>
 		<attribute name="value:set" for="gstRate" expr="0.00" if="!product"/>
 		<attribute name="value:set" for="price" expr="0.00" if="!product"/>
 		<attribute name="value:set" for="hsbn" expr="" if="!product"/>
@@ -45,4 +46,9 @@
 	<action-method name="action-invoiceline-method-calculate-amount">
 		<call class="com.axelor.gst.controller.InvoiceLineController" method="calculate"/>
 	</action-method>
+	
+	<action-group name="action-invoiceline-group-product-actions">
+		<action name="action-invoiceline-attr-get-product-data"/>
+		<action name="action-invoiceline-method-calculate-amount"/>
+	</action-group>
 </object-views>

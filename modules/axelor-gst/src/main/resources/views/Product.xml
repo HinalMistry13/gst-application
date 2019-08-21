@@ -6,8 +6,8 @@
 	<grid model="com.axelor.gst.db.Product" title="Product"
 		name="product-grid">
 		<toolbar>
-			<button name="invoiceButton" title="Create Invoice" onClick="action-product-view-invoice-form"/>
-			<button name="printButton" title="Print" onClick="action-invoice-method-set-filepath,action-product-report"/>
+			<button name="invoiceButton" title="Create Invoice" icon="fa-file-text-o" onClick="action-product-view-invoice-form"/>
+			<button name="printButton" title="Print" icon="fa-print" onClick="action-invoice-method-set-filepath,action-product-report" showIf="_ids"/>
 		</toolbar>
 		<field name="image" title="Image" widget="image" />
 		<field name="name" title="Name" />

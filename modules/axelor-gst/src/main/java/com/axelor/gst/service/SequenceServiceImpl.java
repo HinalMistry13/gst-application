@@ -2,7 +2,6 @@ package com.axelor.gst.service;
 
 import com.axelor.gst.db.Sequence;
 import com.axelor.gst.db.repo.SequenceRepository;
-import com.axelor.meta.db.MetaModel;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
@@ -23,18 +22,12 @@ public class SequenceServiceImpl implements SequenceService {
 		}
 		return oldNumber.toString();
 	}
-
-	@Override
-	public Sequence getSequenceByModel(MetaModel model) {
-		return sequenceRepository.findByModel(model);
-	}
 	
 	@Override
 	@Transactional
 	public void updateNextIndex(Sequence sequence) {
 		StringBuilder newNumber = new StringBuilder();
-		StringBuilder oldNumber = new StringBuilder();
-		oldNumber = new StringBuilder(sequence.getNextNumber());
+		String oldNumber = sequence.getNextNumber();
 		newNumber.append(sequence.getPrefix());
 		long number = Long.parseLong(oldNumber.substring(sequence.getPrefix().length(),sequence.getPrefix().length() + sequence.getPadding())) + 1;
 		long numSize = String.valueOf(number).length();

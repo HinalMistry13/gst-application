@@ -3,7 +3,14 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
 
-	<menuitem name="menu-party-root" title="Party"/>
+	<menuitem name="menu-dashboards" order="-101" title="Dashboards" icon="fa-dashboard" icon-background="blue"/>
+	
+		<menuitem name="menu-welcome" parent="menu-dashboards" title="Welcome!" action="welcome"/>
+		<action-view name="welcome" title="Welcome!">
+	    	<view type="dashboard" name="welcome.dashboard"/>
+		</action-view>
+		
+	<menuitem name="menu-party-root" title="Party" icon="fa-address-card" icon-background="violet"/>
 
 	  	<menuitem name="menu-party-root-all" parent="menu-party-root" title="Party" action="action.party.all"/>
 	  	<action-view name="action.party.all" title="Party" model="com.axelor.gst.db.Party">
@@ -45,7 +52,7 @@
 		    	<view type="form" name="country-form"/>
 		   	</action-view>
 		   	
-  	<menuitem name="menu-product-root" title="Product"/>
+  	<menuitem name="menu-product-root" title="Product" icon="fa-product-hunt" icon-background="orange"/>
 
 	  	<menuitem name="menu-product-root-all" parent="menu-product-root" title="Product" action="action.product.all"/>
 	  	<action-view name="action.product.all" title="Product" model="com.axelor.gst.db.Product">
@@ -61,7 +68,7 @@
 	    	<view type="form" name="product-category-form"/>
 	   	</action-view>
    	
-   	<menuitem name="menu-invoice-root" title="Invoice"/>
+   	<menuitem name="menu-invoice-root" title="Invoice" icon="fa-clipboard-list" icon-background="grey"/>
    	
    		<menuitem name="menu-invoice-root-create" parent="menu-invoice-root" title="Create Invoice" action="action.invoice.create"/>
 	  	<action-view name="action.invoice.create" title="Invoice" model="com.axelor.gst.db.Invoice">
@@ -108,7 +115,7 @@
 	    	<view type="kanban" name="invoice-kanban"/>
 		</action-view>
 	   	
-	<menuitem name="menu-company-root" title="Company"/>
+	<menuitem name="menu-company-root" title="Company" icon="fa-building" icon-background="brown"/>
 		
 		<menuitem name="menu-company-root-all" parent="menu-company-root" title="Company" action="action.company.all"/>
 	  	<action-view name="action.company.all" title="Company" model="com.axelor.gst.db.Company">
@@ -144,12 +151,5 @@
 		<context name="fromDate" expr="eval:LocalDate.now().minusMonths(1)"/>
 		<context name="toDate" expr="eval:LocalDate.now().minusMonths(0)"/>
 	</action-view>
-  	
-  	<action-view name="welcome" title="Welcome!">
-	    <view type="dashboard" name="welcome.dashboard"/>
-	</action-view>
 	
-	<menuitem name="menu-dashboards" order="-101" title="Dashboards" icon="fa-dashboard" icon-background="blue"/>
-	
-	<menuitem name="menu-welcome" parent="menu-dashboards" title="Welcome!" action="welcome"/>
 </object-views>

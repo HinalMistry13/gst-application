@@ -7,22 +7,22 @@
 	<module package="com.axelor.gst.db" name="gst" />
 
 	<entity name="Invoice">
-		<string name="status" selection="com.axelor.gst.invoice.status"  title="Status" readonly="true"/>
-		<many-to-one name="company" ref="com.axelor.gst.db.Company" required="true"/>
+		<string name="status" selection="com.axelor.gst.invoice.status"  title="Status"/>
+		<many-to-one name="company" ref="com.axelor.gst.db.Company" required="true" title="Company"/>
 		<string name="reference" title="Reference"/>
 		<datetime name="invoiceDate" title="Date"/>
-		<integer name="priority"/>
-		<many-to-one name="party" ref="com.axelor.gst.db.Party" required="true"/>
-		<many-to-one name="partyContact" ref="com.axelor.gst.db.Contact"/>
-		<many-to-one name="invoiceAddress" ref="com.axelor.gst.db.Address" required="true"/>
-		<many-to-one name="shippingAddress" ref="com.axelor.gst.db.Address"/>
-		<boolean name="sameAddress" transient="true" default="true"/>
-		<decimal name="netAmount"/>
-		<decimal name="netIgst" />
-		<decimal name="netCgst" />
-		<decimal name="netSgst" />
-		<decimal name="grossAmount"/>
-		<one-to-many name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" mappedBy="invoice"/>
+		<integer name="priority" title="Priority"/>
+		<many-to-one name="party" ref="com.axelor.gst.db.Party" required="true" title="Party"/>
+		<many-to-one name="partyContact" ref="com.axelor.gst.db.Contact" title="Party Contact"/>
+		<many-to-one name="invoiceAddress" ref="com.axelor.gst.db.Address" required="true" title="Invoice Address"/>
+		<many-to-one name="shippingAddress" ref="com.axelor.gst.db.Address" title="Shipping Address"/>
+		<boolean name="sameAddress" transient="true" title="Use Invoice Address as Shipping Address"/>
+		<decimal name="netAmount" title="Net Amount"/>
+		<decimal name="netIgst" title="Net IGST"/>
+		<decimal name="netCgst" title="Net CGST"/>
+		<decimal name="netSgst" title="Net SGST"/>
+		<decimal name="grossAmount" title="Gross Amount"/>
+		<one-to-many name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" mappedBy="invoice" title="Invoice Items"/>
 	
 		<extra-code>
 			<![CDATA[
