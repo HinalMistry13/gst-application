@@ -115,7 +115,7 @@
 	</action-group>
 	
 	<action-attrs name="action-invoice-attr-status-validated">
-		<attribute name="value" for="status" expr="validated"/>
+		<attribute name="value" for="status" expr="validated" if="status=='draft'"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-status-paid">

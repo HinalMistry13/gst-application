@@ -130,7 +130,20 @@
 	   	
 	<dashboard name="welcome.dashboard" title="Welcome!">
 	    <dashlet action="chart:chart-customer-per-state"/>
+	    <dashlet action="chart:chart-unpaid-invoice-per-customer"/>
+	    <dashlet action="chart:chart-paid-invoice-per-category-product"/>
+	    <dashlet action="chart:chart-invoice-per-status-amount"/>
+	    <dashlet action="chart:chart-invoice-per-status-invoice"/>
+	    <dashlet action="action.invoice.grid-view"/>
   	</dashboard>
+  	
+  	<action-view name="action.invoice.grid-view" title="Draft Invoices" model="com.axelor.gst.db.Invoice">
+	    <view type="grid" name="invoice-grid" />
+	    <domain>self.status != :status and self.invoiceDate &gt; :fromDate and self.invoiceDate &lt; :toDate</domain>
+		<context name="status" expr="paid"/>
+		<context name="fromDate" expr="eval:LocalDate.now().minusMonths(1)"/>
+		<context name="toDate" expr="eval:LocalDate.now().minusMonths(0)"/>
+	</action-view>
   	
   	<action-view name="welcome" title="Welcome!">
 	    <view type="dashboard" name="welcome.dashboard"/>
