@@ -1128,10 +1128,13 @@ limit 1;]]></xml-property>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
-            <property name="headerHeight">1.1in</property>
+            <property name="headerHeight">1.2in</property>
             <property name="footerHeight">0.5in</property>
             <page-header>
-                <image id="67">
+                <grid id="68">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="height">1.0845070422535212in</property>
                     <property name="dataSet">Company Data Set</property>
                     <list-property name="boundDataColumns">
                         <structure>
@@ -1141,9 +1144,33 @@ limit 1;]]></xml-property>
                             <property name="dataType">string</property>
                         </structure>
                     </list-property>
-                    <property name="source">file</property>
-                    <expression name="uri" type="javascript">params["fpath"].value + "/" + row["file_name"]</expression>
-                </image>
+                    <column id="69">
+                        <property name="width">1.1in</property>
+                    </column>
+                    <column id="70"/>
+                    <row id="71">
+                        <property name="height">1.0845070422535212in</property>
+                        <cell id="72">
+                            <property name="textAlign">center</property>
+                            <property name="verticalAlign">middle</property>
+                            <image id="82">
+                                <property name="width">1in</property>
+                                <list-property name="visibility">
+                                    <structure>
+                                        <property name="format">all</property>
+                                        <expression name="valueExpr" type="javascript">row["file_name"]==null</expression>
+                                    </structure>
+                                </list-property>
+                                <property name="source">file</property>
+                                <expression name="uri" type="javascript">params["fpath"].value + "/" + row["file_name"]</expression>
+                            </image>
+                        </cell>
+                        <cell id="73">
+                            <property name="textAlign">center</property>
+                            <property name="verticalAlign">bottom</property>
+                        </cell>
+                    </row>
+                </grid>
             </page-header>
             <page-footer>
                 <text id="3">
@@ -1221,6 +1248,26 @@ limit 1;]]></xml-property>
             <column id="40">
                 <property name="width">20%</property>
             </column>
+            <header>
+                <row id="76">
+                    <cell id="77">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="75">
+                            <property name="fontSize">24pt</property>
+                            <text-property name="text">Products</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
             <detail>
                 <row id="12">
                     <property name="verticalAlign">middle</property>
@@ -1239,6 +1286,13 @@ limit 1;]]></xml-property>
                         <image id="43">
                             <property name="height">1in</property>
                             <property name="width">1in</property>
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">row["file_path"]==null</expression>
+                                </structure>
+                            </list-property>
+                            <structure name="toc"/>
                             <property name="source">file</property>
                             <expression name="uri" type="javascript">params["fpath"].value + "/" + row["file_path"]</expression>
                         </image>

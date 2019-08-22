@@ -1460,6 +1460,8 @@ where invline.invoice=?;  ]]></xml-property>
             <property name="footerHeight">1in</property>
             <page-header>
                 <grid id="122">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
                     <property name="dataSet">Invoice Data Set</property>
                     <list-property name="boundDataColumns">
                         <structure>
@@ -1482,16 +1484,14 @@ where invline.invoice=?;  ]]></xml-property>
                     <row id="125">
                         <property name="height">1.1in</property>
                         <cell id="126">
-                            <image id="117">
-                                <property name="height">1in</property>
+                            <property name="textAlign">center</property>
+                            <property name="verticalAlign">middle</property>
+                            <image id="130">
                                 <property name="width">1in</property>
-                                <property name="dataSet">Invoice Data Set</property>
-                                <list-property name="boundDataColumns">
+                                <list-property name="visibility">
                                     <structure>
-                                        <property name="name">company_logo</property>
-                                        <text-property name="displayName">company_logo</text-property>
-                                        <expression name="expression" type="javascript">dataSetRow["company_logo"]</expression>
-                                        <property name="dataType">string</property>
+                                        <property name="format">all</property>
+                                        <expression name="valueExpr" type="javascript">row["company_logo"]==null</expression>
                                     </structure>
                                 </list-property>
                                 <property name="source">file</property>
@@ -1499,7 +1499,7 @@ where invline.invoice=?;  ]]></xml-property>
                             </image>
                         </cell>
                         <cell id="127">
-                            <property name="fontSize">16pt</property>
+                            <property name="fontSize">24pt</property>
                             <property name="verticalAlign">middle</property>
                             <text id="129">
                                 <property name="contentType">html</property>

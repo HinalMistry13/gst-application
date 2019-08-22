@@ -15,10 +15,13 @@ public class InvoiceLineServiceImpl implements InvoiceLineService {
 
 	@Inject ProductRepository productRepository;
 	
+	/*
+	 * Calculation of gst cost.
+	 */
 	@Override
 	public InvoiceLine calculateInvoiceLineAmount(InvoiceLine invoiceLine,Company company,Address invoiceAddress) {
 		if (company != null && invoiceAddress != null && invoiceLine!=null) {
-			if (company.getAddress().getState() != null && invoiceAddress.getState() != null) {
+			if (company.getAddress()!=null && company.getAddress().getState() != null && invoiceAddress.getState() != null) {
 				String companyState = company.getAddress().getState().getName();
 				String invoiceState = invoiceAddress.getState().getName();
 				invoiceLine.setNetAmount(invoiceLine.getPrice().multiply(new BigDecimal(invoiceLine.getQty())));
@@ -34,7 +37,10 @@ public class InvoiceLineServiceImpl implements InvoiceLineService {
 		}
 		return invoiceLine;
 	}
-
+	
+	/*
+	 * Return Invoice item list by product id.
+	 */
 	@Override
 	public List<InvoiceLine> getInvoiceItemsById(List<Integer> products) {
 		List<InvoiceLine> invoiceItemList = new ArrayList<InvoiceLine>();

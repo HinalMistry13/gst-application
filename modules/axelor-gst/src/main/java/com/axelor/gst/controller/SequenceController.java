@@ -10,6 +10,9 @@ public class SequenceController {
 
 	@Inject SequenceService sequenceService;
 	
+	/*
+	 * this method generate the Next Number for the sequence and set field.
+	 */
 	public void calculate(ActionRequest request,ActionResponse response) {
 		Sequence sequence = request.getContext().asType(Sequence.class);
 		String str = sequenceService.getNextIndex(sequence);

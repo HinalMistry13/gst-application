@@ -12,11 +12,11 @@
 	
 	<form model="com.axelor.gst.db.Sequence" title="Sequence" name="sequence-form">
 		<panel>
-			<field name="prefix" required="true" colSpan="4" onChange="action-sequence-attr-build-next-number"/>
-			<field name="suffix" colSpan="4" onChange="action-sequence-attr-build-next-number"/>
-			<field name="padding" colSpan="4" default="1" onChange="action-sequence-attr-build-next-number"/>
-			<field name="nextNumber" readonly="true"/>
+			<field name="prefix" required="true" onChange="action-sequence-attr-build-next-number"/>
+			<field name="suffix" onChange="action-sequence-attr-build-next-number"/>
+			<field name="padding" default="1" onChange="action-sequence-attr-build-next-number"/>
 			<field name="model" required="true" onChange="action-sequence-attr-build-next-number"/>
+			<field name="nextNumber" readonly="true"/>
 		</panel>
 	</form>
 	

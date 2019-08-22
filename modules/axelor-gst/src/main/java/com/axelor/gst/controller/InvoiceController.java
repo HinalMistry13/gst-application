@@ -11,6 +11,9 @@ public class InvoiceController {
 	
 	@Inject InvoiceService invoiceService;
 	
+	/*
+	 *This method pass data from view to service for calculation and set value of it. 
+	 */
 	public void calculate(ActionRequest request,ActionResponse response) {
 		Invoice invoice = request.getContext().asType(Invoice.class);
 		invoice = invoiceService.calculateGST(invoice);
@@ -22,6 +25,9 @@ public class InvoiceController {
 		response.setValue("grossAmount", invoice.getGrossAmount());
 	}
 	
+	/*
+	 * This method set file path.
+	 */
 	public void getFilePath(ActionRequest request,ActionResponse response) {
 		request.getContext().put("fpath", AppSettings.get().get("file.upload.dir"));
 	}

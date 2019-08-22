@@ -68,7 +68,7 @@
 	    	<view type="form" name="product-category-form"/>
 	   	</action-view>
    	
-   	<menuitem name="menu-invoice-root" title="Invoice" icon="fa-clipboard-list" icon-background="grey"/>
+   	<menuitem name="menu-invoice-root" title="Invoice" icon-background="grey"/>
    	
    		<menuitem name="menu-invoice-root-create" parent="menu-invoice-root" title="Create Invoice" action="action.invoice.create"/>
 	  	<action-view name="action.invoice.create" title="Invoice" model="com.axelor.gst.db.Invoice">

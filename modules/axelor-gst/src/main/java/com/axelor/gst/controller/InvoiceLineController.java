@@ -14,6 +14,9 @@ public class InvoiceLineController {
 
 	@Inject InvoiceLineService invoiceLineService;
 	
+	/*
+	 * This method pass data from view to service for calculation and set value of it. 
+	 */
 	public void calculate(ActionRequest request, ActionResponse response) {
 		InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
 		Company company = (Company) request.getContext().getParent().get("company");
@@ -31,6 +34,9 @@ public class InvoiceLineController {
 		response.setValue("grossAmount", invoiceLine.getGrossAmount());
 	}
 	
+	/*
+	 * This method pass invoice items to invoice form which are selected from product grid. 
+	 */
 	public void getProductsByIds(ActionRequest request, ActionResponse response) {
 		@SuppressWarnings("unchecked")
 		List<Integer> ids = (List<Integer>) request.getContext().get("products");

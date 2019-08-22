@@ -17,7 +17,7 @@
 	<form model="com.axelor.gst.db.Company" title="Company"	name="company-form">
 		<panel colSpan="12">
 			<panel colSpan="4">
-				<field name="logo" showTitle="false" colSpan="12" widget="image" />
+				<field name="logo" showTitle="false" colSpan="12" widget="image"/>
 			</panel>
 			<panel colspan="8">
 				<field name="name" required="true" colSpan="12"/>

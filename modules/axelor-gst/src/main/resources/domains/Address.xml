@@ -8,8 +8,10 @@
 	<entity name="Address">
 		<string name="fullAddress" title="Full Address" required="true" namecolumn="true">
 			<![CDATA[
-    			if (line1 == null || state == null)
+    			if (line1 == null && state == null)
       				return null;
+      			if(state==null)
+      				return line1;
     		    return line1 + " (" + state.getName() + ")";
     		]]>
 		</string>

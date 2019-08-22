@@ -25,18 +25,28 @@
 			<field name="type" required="true"/>
 			<field name="line1" required="true"/>
 			<field name="line2" />
-			<field name="city" required="true"/>
-			<field name="state" />
+			<field name="city" required="true" />
+			<field name="state"/>
 			<field name="country" required="true"/>
 			<field name="pincode"/>
 		</panel>
 	</form>
 	
+<!-- 	<action-attrs name="action-address-set-dummy-values"> -->
+<!-- 		<attribute name="value" for="$countryName" expr="eval:country.name" if="country!=null"/> -->
+<!-- 		<attribute name="value" for="$stateName" expr="eval:state.name" if="state!=null"/> -->
+<!-- 	</action-attrs> -->
+	
 <!-- 	<action-attrs name="action-address-attr-set-state-country-wise"> -->
-<!-- 		<attribute name="value" for="state" expr="eval: qout; self.country=:country.name qout;"/> -->
+<!-- 		<attribute name="domain" for="state" expr="select: s from State s where s.country = country.name" if="country"/> -->
+<!-- 	</action-attrs> -->
+	
+<!-- 	<action-attrs name="action-address-attr-set-city-state-wise"> -->
+<!-- 		<attribute name="domain" for="city" expr="select: c from City c where c.state = state.name" if="state"/> -->
 <!-- 	</action-attrs> -->
 	
 <!-- 	<action-validate name="test"> -->
-<!-- 		<notify message="eval:country.name"/> -->
+<!-- 		<notify message="eval:countryName" if="countryName"/> -->
+<!-- 		<notify message="eval:stateName" if="stateName"/> -->
 <!-- 	</action-validate> -->
 </object-views>

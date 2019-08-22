@@ -15,10 +15,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Inject
 	private InvoiceLineService invoiceLineService;
 	
+	/*
+	 * Calculate the gst cost of Invocie.
+	 */
 	@Override
 	public Invoice calculateGST(Invoice invoice) {
 		if (invoice.getCompany() != null && invoice.getInvoiceAddress() != null && invoice.getInvoiceItems()!=null) {
-			if (invoice.getCompany().getAddress() != null && invoice.getCompany().getAddress().getState() != null && invoice.getInvoiceAddress().getState() != null) {
+			if (invoice.getCompany() != null && invoice.getCompany().getAddress() != null && invoice.getCompany().getAddress().getState() != null && invoice.getInvoiceAddress().getState() != null) {
 				Company company = invoice.getCompany();
 				Address invoiceAddress = invoice.getInvoiceAddress();
 				BigDecimal invoiceNetAmount = BigDecimal.ZERO;

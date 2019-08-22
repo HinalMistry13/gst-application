@@ -30,8 +30,7 @@ public class InvoiceInvoiceRepository extends InvoiceRepository {
 			}
 			return super.save(entity);
 		} catch (Exception e) {
-			throw new PersistenceException(
-					"Model is not found for Sequence '" + entity.getClass().getSimpleName() + "'");
+			throw new PersistenceException("Model is not found for Sequence '" + entity.getClass().getSimpleName() + "'");
 		}
 	}
 }

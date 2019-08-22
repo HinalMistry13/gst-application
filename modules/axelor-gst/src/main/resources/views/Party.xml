@@ -20,15 +20,14 @@
 		<field name="address" title="Address" />
 	</grid>
 
-	<form model="com.axelor.gst.db.Party" title="Party"
-		name="party-form">
+	<form model="com.axelor.gst.db.Party" title="Party"	name="party-form">
 		<panel title="Overview">
 			<field name="reference" readonly="true" showIf="id" />
 			<field name="name" required="true" />
 			<field name="type" required="true" />
 			<field name="gstIn" min="15" max="15" />
-			<field name="customer" widget="boolean-switch" colSpan="3" />
-			<field name="supplier" widget="boolean-switch" colSpan="3" />
+			<field name="customer" widget="boolean-switch" colSpan="3"/>
+			<field name="supplier" widget="boolean-switch" colSpan="3"/>
 		</panel>
 		<panel title="Contacts">
 			<field name="contact" showTitle="false" colSpan="12">
@@ -72,18 +71,20 @@
   				</div>
   				<div class="span5">
   					<contact>
-  						<div data-ng-repeat="c in contact">
-  							<strong>{{c.name}}</strong><br>
-  							<strong><i class='fa fa-envelope'></i> : </strong> {{c.primaryEmail}}<br>
-  							<strong><i class="fa fa-phone"></i> : </strong> {{c.primaryPhone}}<br><br>
+  						<strong>{{contact.name}}</strong><br>
+  						<div ng-if="contact.primaryEmail != null">
+  							<strong><i class='fa fa-envelope'></i> : </strong> {{contact.primaryEmail}}<br>
+  						</div>
+  						<div ng-if="contact.primaryPhone !=null">
+  							<strong><i class="fa fa-phone"></i> : </strong> {{contact.primaryPhone}}<br><br>
   						</div>	
   					</contact>
   				</div>
   				<div class="span4">
   					<address>
-  						<div data-ng-repeat="a in address">
-  							<strong>{{a.type}} Address : </strong><br>
-  							{{a.line1}}, {{a.city.name}}, {{a.state.name}}, {{a.country.name}}, {{a.pincode}}.<br>
+  						<div ng-if="!address">
+  							<strong>{{address.type}} Address : </strong><br>
+  							{{address.line1}}, {{address.city.name}}, {{address.state.name}}, {{address.country.name}}, {{address.pincode}}.<br>
   						</div>
   					</address>
 				</div>

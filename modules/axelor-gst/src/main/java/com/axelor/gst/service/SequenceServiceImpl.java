@@ -10,6 +10,9 @@ public class SequenceServiceImpl implements SequenceService {
 	@Inject
 	SequenceRepository sequenceRepository;
 
+	/*
+	 * this method generate the next number of sequence for creation time.
+	 */
 	@Override
 	public String getNextIndex(Sequence sequence) {
 		StringBuilder oldNumber = new StringBuilder();
@@ -23,6 +26,9 @@ public class SequenceServiceImpl implements SequenceService {
 		return oldNumber.toString();
 	}
 	
+	/*
+	 * this method generate the next number from previous sequence.
+	 */
 	@Override
 	@Transactional
 	public void updateNextIndex(Sequence sequence) {

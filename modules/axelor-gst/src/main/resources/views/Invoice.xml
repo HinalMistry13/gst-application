@@ -76,7 +76,7 @@
 		</panel>
 	</form>
 	
-	<kanban name="invoice-kanban" title="Invoice" model="com.axelor.gst.db.Invoice" columnBy="status" sequenceBy="priority">
+	<kanban name="invoice-kanban" title="Invoice" model="com.axelor.gst.db.Invoice" columnBy="status" sequenceBy="priority" onMove="action-invoice-status-validate-onmove">
 		<field name="status"/>
 		<field name="company"/>
 		<field name="reference"/>
@@ -108,6 +108,10 @@
 			]]>
 		</template>
 	</kanban>
+
+	<action-validate name="action-invoice-status-validate-onmove">
+		<error message="Can not move to Draft State" if="__self__.status!='draft'"/>
+	</action-validate>
 	
 	<action-group name="action-invoice-group-onnew-actions">
 		<action name="action-invoice-record-default-record"/>
