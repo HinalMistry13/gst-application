@@ -12,8 +12,8 @@
 		<boolean name="customer" title="Customer"/>
 		<boolean name="supplier" title="Supplier"/>
 		<string name="gstIn" title="GSTIN" min="15" max="15"/>
-		<one-to-many name="contact" ref="com.axelor.gst.db.Contact" title="Contact"/>
-		<one-to-many name="address" ref="com.axelor.gst.db.Address" title="Address"/>
+		<one-to-many name="contactList" ref="com.axelor.gst.db.Contact" title="Contact"/>
+		<one-to-many name="addressList" ref="com.axelor.gst.db.Address" title="Address"/>
 		
 		<extra-code>
 			<![CDATA[

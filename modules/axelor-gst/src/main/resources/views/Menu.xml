@@ -17,7 +17,6 @@
 	    	<view type="grid" name="party-grid"/>
 	    	<view type="form" name="party-form"/>
 	    	<view type="cards" name="party-card"/>
-	    	<context name="json-enhance" expr="true" />
 	   	</action-view>
 	  
 	  	<menuitem name="menu-party-root-contact" parent="menu-party-root" title="Contact" action="action.contact.all"/>
@@ -146,10 +145,11 @@
   	
   	<action-view name="action.invoice.grid-view" title="Draft Invoices" model="com.axelor.gst.db.Invoice">
 	    <view type="grid" name="invoice-grid" />
-	    <domain>self.status != :status and self.invoiceDate &gt; :fromDate and self.invoiceDate &lt; :toDate</domain>
-		<context name="status" expr="paid"/>
-		<context name="fromDate" expr="eval:LocalDate.now().minusMonths(1)"/>
-		<context name="toDate" expr="eval:LocalDate.now().minusMonths(0)"/>
+	    <domain>self.status NOT IN (:statusPaid,:statusCanceled) AND (self.invoiceDate &gt;= :fromDate AND self.invoiceDate &lt;= :toDate)</domain>
+		<context name="statusPaid" expr="paid"/>
+		<context name="statusCanceled" expr="canceled"/>	
+		<context name="fromDate" expr="eval:__date__.minusMonths(1)"/>
+		<context name="toDate" expr="eval:__date__"/>
 	</action-view>
 	
 </object-views>

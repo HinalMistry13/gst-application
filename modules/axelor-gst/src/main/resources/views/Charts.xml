@@ -16,11 +16,11 @@
 				LEFT JOIN(
 					SELECT 
 						party.id, 
-						pa.address as addr 
+						pa.address_list as addr 
 					FROM
 						gst_party party 
 					LEFT JOIN 
-						gst_party_address pa on party.id = pa.gst_party
+						gst_party_address_list pa on party.id = pa.gst_party
 					WHERE 
 						party.customer = true
 				) 
@@ -68,6 +68,7 @@
 	
 	<action-record model="com.axelor.gst.db.Party" name="action.unpaid.chart.set.date">
 		<field name="fromDate" expr="eval:LocalDate.now().getYear() + '-' + LocalDate.now().getMonth() + '-01'"/>
+		<field name="toDate" expr="eval:__date__"/>
 	</action-record>
 	
 	<chart name="chart-paid-invoice-per-category-product" title="Paid invoices per category per product: Bar chart" onInit="action.unpaid.chart.set.date">

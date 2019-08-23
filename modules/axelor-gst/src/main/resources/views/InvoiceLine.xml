@@ -38,6 +38,7 @@
 		<attribute name="value:set" for="gstRate" expr="eval: product.gstRate" if="product"/>
 		<attribute name="value:set" for="price" expr="eval: product.salePrice" if="product"/>
 		<attribute name="value:set" for="qty" expr="1"/>
+		<attribute name="value" for="item" expr="eval: '[' + product.code + '] '+ product.name"/>
 		<attribute name="value:set" for="gstRate" expr="0.00" if="!product"/>
 		<attribute name="value:set" for="price" expr="0.00" if="!product"/>
 		<attribute name="value:set" for="hsbn" expr="" if="!product"/>

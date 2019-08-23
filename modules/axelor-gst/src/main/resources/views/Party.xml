@@ -16,24 +16,25 @@
 		<field name="customer" title="Customer" />
 		<field name="supplier" title="Supplier" />
 		<field name="gstIn" title="GSTIN" />
-		<field name="contact" title="Contact" />
-		<field name="address" title="Address" />
+		<field name="contactList" title="Contact" />
+		<field name="addressList" title="Address" />
 	</grid>
 
-	<form model="com.axelor.gst.db.Party" title="Party"	name="party-form">
+	<form model="com.axelor.gst.db.Party" title="Party"
+		name="party-form">
 		<panel title="Overview">
-			<field name="reference" readonly="true" showIf="id" />
-			<field name="name" required="true" />
-			<field name="type" required="true" />
+			<field name="name" />
+			<field name="type" />
 			<field name="gstIn" min="15" max="15" />
-			<field name="customer" widget="boolean-switch" colSpan="3"/>
-			<field name="supplier" widget="boolean-switch" colSpan="3"/>
+			<field name="customer" colSpan="3" />
+			<field name="supplier" colSpan="3" />
+			<field name="reference" readonly="true" showIf="id" />
 		</panel>
 		<panel title="Contacts">
-			<field name="contact" showTitle="false" colSpan="12">
-				<editor>
-					<field name="name" required="true" />
-					<field name="type" required="true" />
+			<field name="contactList" showTitle="false" colSpan="12">
+				<editor x-viewer="true">
+					<field name="name" />
+					<field name="type" />
 					<field name="primaryEmail" />
 					<field name="secondaryEmail" />
 					<field name="primaryPhone" />
@@ -42,8 +43,8 @@
 			</field>
 		</panel>
 		<panel title="Address">
-			<field name="address" showTitle="false" colSpan="12">
-				<editor>
+			<field name="addressList" showTitle="false" colSpan="12">
+				<editor x-viewer="true">
 					<field name="type" required="true" />
 					<field name="line1" required="true" />
 					<field name="line2" />
@@ -56,13 +57,16 @@
 		</panel>
 	</form>
 
-	<cards name="party-card" model="com.axelor.gst.db.Party" title="Party">
+	<cards name="party-card" model="com.axelor.gst.db.Party"
+		title="Party">
 		<field name="name" />
 		<field name="type" />
-		<field name="contact" />
-		<field name="address" />
+		<field name="contactList" />
+		<field name="addressList" />
 		<field name="customer" />
 		<field name="supplier" />
+		<field name="contact"/>
+		<field name="address"/>
 		<template>
 			<![CDATA[
 				<div class="span3 card-image">
@@ -76,7 +80,7 @@
   							<strong><i class='fa fa-envelope'></i> : </strong> {{contact.primaryEmail}}<br>
   						</div>
   						<div ng-if="contact.primaryPhone !=null">
-  							<strong><i class="fa fa-phone"></i> : </strong> {{contact.primaryPhone}}<br><br>
+  							<strong><i class="fa fa-phone"></i> : </strong> {{contact.primaryPhone}}
   						</div>	
   					</contact>
   				</div>

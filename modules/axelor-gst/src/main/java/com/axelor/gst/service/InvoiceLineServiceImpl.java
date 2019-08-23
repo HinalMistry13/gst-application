@@ -21,19 +21,28 @@ public class InvoiceLineServiceImpl implements InvoiceLineService {
 	@Override
 	public InvoiceLine calculateInvoiceLineAmount(InvoiceLine invoiceLine,Company company,Address invoiceAddress) {
 		if (company != null && invoiceAddress != null && invoiceLine!=null) {
+			invoiceLine.setNetAmount(invoiceLine.getPrice().multiply(new BigDecimal(invoiceLine.getQty())));
 			if (company.getAddress()!=null && company.getAddress().getState() != null && invoiceAddress.getState() != null) {
 				String companyState = company.getAddress().getState().getName();
 				String invoiceState = invoiceAddress.getState().getName();
-				invoiceLine.setNetAmount(invoiceLine.getPrice().multiply(new BigDecimal(invoiceLine.getQty())));
 				if(companyState.equals(invoiceState)) {
+					invoiceLine.setIgst(BigDecimal.ZERO);
 					invoiceLine.setSgst((invoiceLine.getNetAmount().multiply(invoiceLine.getGstRate())).divide(new BigDecimal(200)));
 					invoiceLine.setCgst((invoiceLine.getNetAmount().multiply(invoiceLine.getGstRate())).divide(new BigDecimal(200)));
 					invoiceLine.setGrossAmount(invoiceLine.getNetAmount().add(invoiceLine.getCgst()).add(invoiceLine.getSgst()));
-				}else { 
+				}else {
+					invoiceLine.setCgst(BigDecimal.ZERO);
+					invoiceLine.setSgst(BigDecimal.ZERO);
 					invoiceLine.setIgst((invoiceLine.getNetAmount().multiply(invoiceLine.getGstRate())).divide(new BigDecimal(100)));
 					invoiceLine.setGrossAmount(invoiceLine.getNetAmount().add(invoiceLine.getIgst()));
 				}
+			}else {
+				invoiceLine.setCgst(BigDecimal.ZERO);
+				invoiceLine.setSgst(BigDecimal.ZERO);
+				invoiceLine.setIgst(BigDecimal.ZERO);
+				invoiceLine.setGrossAmount(invoiceLine.getNetAmount());
 			}
+			
 		}
 		return invoiceLine;
 	}

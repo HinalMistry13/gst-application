@@ -1742,7 +1742,8 @@ where invline.invoice=?;  ]]></xml-property>
                                 <text id="92">
                                     <property name="fontSize">12pt</property>
                                     <property name="contentType">html</property>
-                                    <text-property name="content"><![CDATA[: <VALUE-OF>row["invoicedate"]</VALUE-OF>]]></text-property>
+                                    <text-property name="content"><![CDATA[: <VALUE-OF  format="dd/MM/yyyy">row["invoicedate"]</VALUE-OF>
+]]></text-property>
                                 </text>
                             </cell>
                             <cell id="74">
@@ -1763,7 +1764,7 @@ where invline.invoice=?;  ]]></xml-property>
                                 <text id="95">
                                     <property name="fontSize">12pt</property>
                                     <property name="contentType">html</property>
-                                    <text-property name="content"><![CDATA[: <VALUE-OF>row["invoice_line"]</VALUE-OF>, <VALUE-OF>row["invoice_city"]</VALUE-OF>, <VALUE-OF>row["invoice_state"]</VALUE-OF>, <VALUE-OF>row["invoice_country"]</VALUE-OF>, <VALUE-OF>row["invoice_pincode"]</VALUE-OF>.]]></text-property>
+                                    <text-property name="content"><![CDATA[  <VALUE-OF>row["invoice_line"]</VALUE-OF>, <VALUE-OF>row["invoice_city"]</VALUE-OF>, <VALUE-OF>row["invoice_state"]</VALUE-OF>, <VALUE-OF>row["invoice_country"]</VALUE-OF>, <VALUE-OF>row["invoice_pincode"]</VALUE-OF>.]]></text-property>
                                 </text>
                             </cell>
                         </row>

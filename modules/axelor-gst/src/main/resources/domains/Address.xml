@@ -6,6 +6,13 @@
 	
 	<module package="com.axelor.gst.db" name="gst"/>
 	<entity name="Address">
+		<string name="type" title="Type" required="true" selection="com.axelor.gst.address.type"/>
+		<string name="line1" title="Line 1" required="true"/>
+		<string name="line2" title="Line 2" />
+		<many-to-one name="city" ref="com.axelor.gst.db.City" title="City" required="true" />
+		<many-to-one name="state" ref="com.axelor.gst.db.State" title="State"/>
+		<many-to-one name="country" ref="com.axelor.gst.db.Country" title="Country" required="true" />
+		<string name="pincode" title="Pincode"/>
 		<string name="fullAddress" title="Full Address" required="true" namecolumn="true">
 			<![CDATA[
     			if (line1 == null && state == null)
@@ -15,14 +22,6 @@
     		    return line1 + " (" + state.getName() + ")";
     		]]>
 		</string>
-		<string name="type" title="Type" required="true" selection="com.axelor.gst.address.type"/>
-		<string name="line1" title="Line 1" required="true"/>
-		<string name="line2" title="Line 2" />
-		<many-to-one name="city" ref="com.axelor.gst.db.City" title="City" required="true" />
-		<many-to-one name="state" ref="com.axelor.gst.db.State" title="State"/>
-		<many-to-one name="country" ref="com.axelor.gst.db.Country" title="Country" required="true" />
-		<string name="pincode" title="Pincode"/>
-		
 		<extra-code>
 			<![CDATA[
 				public static final String ADDRESS_TYPE_DEFAULT = "default";

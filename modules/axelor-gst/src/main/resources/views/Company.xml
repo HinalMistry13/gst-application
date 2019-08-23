@@ -8,9 +8,9 @@
 		<field name="fullAddress" title="Full Address"/>
 		<field name="logo" title="Logo" widget="image" />
 		<field name="name" title="Name" />
-		<field name="contact" title="Contact" />
+		<field name="contactList" title="Contact" />
 		<field name="gstIn" title="GSTIN" />
-		<field name="bankAccount" title="Bank Account" />
+		<field name="bankAccountList" title="Bank Account" />
 		<field name="address" title="Address" />
 	</grid>
 
@@ -26,7 +26,7 @@
 			</panel>
 		</panel>
 		<panel title="Contacts">
-			<field name="contact" showTitle="false" colSpan="12">
+			<field name="contactList" showTitle="false" colSpan="12">
 				<editor>
 					<field name="name" required="true" />
 					<field name="type" required="true" />
@@ -38,7 +38,7 @@
 			</field>
 		</panel>
 		<panel title="Bank Details">
-			<field name="bankAccount" showTitle="false" colSpan="12">
+			<field name="bankAccountList" showTitle="false" colSpan="12">
 				<editor>
 					<field name="bank" required="true" />
 					<field name="accountNo" required="true" />

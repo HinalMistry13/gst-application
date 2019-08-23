@@ -17,9 +17,9 @@
 		</string>
 		<string name="name" title="Name" required="true" />
 		<many-to-one name="logo" ref="com.axelor.meta.db.MetaFile" title="Logo"/>
-		<one-to-many name="contact" ref="com.axelor.gst.db.Contact" title="Contact"/>
+		<one-to-many name="contactList" ref="com.axelor.gst.db.Contact" title="Contact"/>
 		<string name="gstIn" title="GSTIN" max="15" min="15"/>
-		<one-to-many name="bankAccount" ref="com.axelor.gst.db.BankAccount" title="Bank Account"/>
+		<one-to-many name="bankAccountList" ref="com.axelor.gst.db.BankAccount" title="Bank Account"/>
 		<many-to-one name="address" ref="com.axelor.gst.db.Address" title="Address"/>		
 	</entity>
 </domain-models>

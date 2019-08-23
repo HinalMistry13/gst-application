@@ -24,8 +24,8 @@ public class PartyPartyRepository extends PartyRepository{
 		try {
 			Long id = (Long) json.get("id");
 			Party party = find(id);
-			json.put("contact", party.getContact().iterator().next());
-			json.put("address", party.getAddress().iterator().next());
+			json.put("contact", party.getContactList().iterator().next());
+			json.put("address", party.getAddressList().iterator().next());
 		} catch (Exception e) {
 		}
 		return json;

@@ -38,15 +38,16 @@
 			<field name="invoiceDate" colSpan="4"/>
 			<field name="priority" colSpan="2"/>
 			<field name="party" required="true" onChange="action-invoice-group-party-actions" domain="self.customer=true"/>
-			<field name="partyContact" onSelect="action-invoice-attr-set-party-contact"/>
+			<field name="partyContact" onSelect="action-invoice-attr-set-party-contact" />
 			<field name="invoiceAddress" required="true" onSelect="action-invoice-attr-invoice-address" onChange="action-invoice-item-method-calculate-amount"/>
 			<field name="shippingAddress" onSelect="action-invoice-attr-shipping-address"/>
 			<field name="sameAddress" onChange="action-invoice-attr-set-shipping"/>
 		</panel>
 		<panel sidebar="true">
-			<button name="validateButton" title="Validated" colSpan="12" onClick="save,action-invoice-attr-status-validated" showIf="status == 'draft'" icon="fa-check-circle"/>
-			<button name="paidButton" title="Paid" colSpan="12" onClick="action-invoice-attr-status-paid" showIf="status == 'validated'" icon="fa-receipt"/>
-			<button name="cancelButton" title="Canceled" colSpan="12" onClick="action-invoice-attr-status-canceled" css="btn-danger" icon="fa-times-circle"/>
+			<button name="validateButton" title="Validated" colSpan="12" onClick="save,action-invoice-attr-status-validated,save" showIf="status == 'draft'" icon="fa-check-circle"/>
+			<button name="paidButton" title="Paid" colSpan="12" onClick="action-invoice-attr-status-paid,save" showIf="status == 'validated'" icon="fa-receipt"/>
+			<button name="cancelButton" title="Canceled" colSpan="12" onClick="action-invoice-attr-status-canceled,save" css="btn-danger" icon="fa-times-circle" showIf="status != 'canceled'"/>
+			<button name="draftButton" title="Move To Draft" colSpan="12" onClick="action-invoice-attr-status-draft,save" icon="fa-undo" showIf="status == 'canceled'"/>
 		</panel>
 		<panel>
 			<field name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" colSpan="12" form-view="invoice-item-popup-form" onChange="action-invoice-item-method-calculate-amount"/>
@@ -63,12 +64,12 @@
 	<form model="com.axelor.gst.db.InvoiceLine" title="Invoice Items" name="invoice-item-popup-form">
 		<panel>
 			<field name="product" onChange="action-invoiceline-group-product-actions"/>
-<!-- 			<field name="item" required="true"/> -->
-			<field name="qty" default="1" colSpan="2" min="1" onChange="action-invoiceline-method-calculate-amount"/>
-			<field name="price" colSpan="4" readonly="true"/>
 			<field name="hsbn" />
+			<field name="item" required="true"/>
+			<field name="qty" default="1" min="1" colSpan="2" onChange="action-invoiceline-method-calculate-amount"/>
+			<field name="gstRate" colSpan="4" onChange="action-invoiceline-method-calculate-amount"/>
+			<field name="price" readonly="true"/>
 			<field name="netAmount" readonly="true" />
-			<field name="gstRate" onChange="action-invoiceline-method-calculate-amount"/>
 			<field name="igst" readonly="true" />
 			<field name="sgst" readonly="true" />
 			<field name="cgst" readonly="true" />
@@ -119,7 +120,7 @@
 	</action-group>
 	
 	<action-group name="action-invoice-group-onsave-actions">
-		<action name="action-invoice-attr-status-validated"/>
+		<action name="action-invoice-validate-check-invoiceitems"/>
 		<action name="action-invoice-item-method-calculate-amount"/>
 	</action-group>
 	
@@ -133,6 +134,14 @@
 		<action name="action-invoice-attr-set-first-element"/>
 		<action name="action-invoice-item-method-calculate-amount"/>
 	</action-group>
+	
+	<action-validate name="action-invoice-validate-check-invoiceitems">
+		<error message="Please provide invoice items." if="invoiceItems==null"/>
+	</action-validate>
+	
+	<action-attrs name="action-invoice-attr-status-draft">
+		<attribute name="value" for="status" expr="draft" if="status=='canceled'"/>
+	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-status-validated">
 		<attribute name="value" for="status" expr="validated" if="status=='draft'"/>
@@ -157,24 +166,26 @@
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-invoice-address">
-		<attribute name="domain" for="invoiceAddress" expr="eval: &quot;self.id IN (${party?.address?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='invoice') &quot;"/>
+		<attribute name="domain" for="invoiceAddress" expr="eval: &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='invoice') &quot;"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-shipping-address">
-		<attribute name="domain" for="shippingAddress" expr="eval: &quot;self.id IN (${party?.address?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='shipping') &quot;"/>
+		<attribute name="domain" for="shippingAddress" expr="eval: &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')}) AND (self.type='default' OR self.type='shipping') &quot;"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-set-party-contact">
-		<attribute name="domain" for="partyContact" expr="eval: &quot;self.id IN (${party?.contact?.collect{it.id}?.join(',')}) AND self.type='primary' &quot;"/>
+		<attribute name="domain" for="partyContact" expr="eval: &quot;self.id IN (${party?.contactList?.collect{it.id}?.join(',')}) AND self.type='primary' &quot;"/>
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-set-first-element">
-		<attribute name="value" for="partyContact" expr="eval: party?.contact?.find{it.type == 'primary'}"/>
-		<attribute name="value" for="invoiceAddress" expr="eval: party?.address?.find{it.type != 'shipping'}"/>
-		<attribute name="value" for="shippingAddress" expr="eval: party?.address?.find{it.type != 'invoice'}"/>
-		<attribute name="value" for="sameAddress" expr="eval:true"/>	
+		<attribute name="value" for="partyContact" expr="eval: party?.contactList?.find{it.type == 'primary'}" if="party"/>
+		<attribute name="value" for="invoiceAddress" expr="eval: party?.addressList?.find{it.type != 'shipping'}" if="party"/>
+		<attribute name="value" for="shippingAddress" expr="eval: party?.addressList?.find{it.type != 'invoice'}" if="party"/>
+		<attribute name="value" for="partyContact" expr="" if="!party"/>
+		<attribute name="value" for="invoiceAddress" expr="" if="!party"/>
+		<attribute name="value" for="shippingAddress" expr="" if="!party"/>
 	</action-attrs>
-	
+		
 	<action-method name="action-invoice-item-method-calculate-amount">
 		<call class="com.axelor.gst.controller.InvoiceController" method="calculate" />
 	</action-method>

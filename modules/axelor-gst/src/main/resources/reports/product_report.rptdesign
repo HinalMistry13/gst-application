@@ -1387,7 +1387,7 @@ limit 1;]]></xml-property>
                         <text id="64">
                             <property name="fontSize">12pt</property>
                             <property name="contentType">html</property>
-                            <text-property name="content"><![CDATA[<VALUE-OF>row["cost_price"]</VALUE-OF>]]></text-property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["sale_price"]</VALUE-OF>]]></text-property>
                         </text>
                     </cell>
                     <cell id="55">
