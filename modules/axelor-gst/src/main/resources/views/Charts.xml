@@ -137,4 +137,13 @@
 		<category key="status" type="text"/>
 		<series key="invoices" groupBy="status" type="line" />
 	</chart>
+	
+	<action-view name="action-invoice-grid-view-status-date-wise" title="Draft Invoices" model="com.axelor.gst.db.Invoice">
+	    <view type="grid" name="invoice-grid" />
+	    <domain>self.status NOT IN (:statusPaid,:statusCanceled) AND (self.invoiceDate &gt;= :fromDate AND self.invoiceDate &lt;= :toDate)</domain>
+		<context name="statusPaid" expr="paid"/>
+		<context name="statusCanceled" expr="canceled"/>	
+		<context name="fromDate" expr="eval:__date__.minusMonths(1)"/>
+		<context name="toDate" expr="eval:__date__"/>
+	</action-view>
 </object-views>
