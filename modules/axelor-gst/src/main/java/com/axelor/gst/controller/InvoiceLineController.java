@@ -6,6 +6,7 @@ import com.axelor.gst.db.Address;
 import com.axelor.gst.db.Company;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.service.InvoiceLineService;
+import com.axelor.gst.service.InvoiceService;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
@@ -13,6 +14,7 @@ import com.google.inject.Inject;
 public class InvoiceLineController {
 
 	@Inject InvoiceLineService invoiceLineService;
+	@Inject InvoiceService invoiceService;
 	
 	/*
 	 * This method pass data from view to service for calculation and set value of it. 
@@ -21,7 +23,7 @@ public class InvoiceLineController {
 		InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
 		Company company = (Company) request.getContext().getParent().get("company");
 		Address invoiceAddress = (Address) request.getContext().getParent().get("invoiceAddress");
-		invoiceLine = invoiceLineService.calculateInvoiceLineAmount(invoiceLine,company,invoiceAddress);
+		invoiceLine = invoiceLineService.calculateInvoiceLineAmount(invoiceLine,invoiceService.isStateDifferent(company, invoiceAddress));
 		response.setValue("product", invoiceLine.getProduct());
 		response.setValue("qty", invoiceLine.getQty());
 		response.setValue("price", invoiceLine.getPrice());
@@ -41,9 +43,6 @@ public class InvoiceLineController {
 		@SuppressWarnings("unchecked")
 		List<Integer> ids = (List<Integer>) request.getContext().get("products");
 		List<InvoiceLine> items = invoiceLineService.getInvoiceItemsById(ids);
-		for(InvoiceLine line : items) {
-			System.out.println(line);
-		}
 		response.setValue("invoiceItems", items);
 	}
 }

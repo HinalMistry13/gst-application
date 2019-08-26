@@ -21,6 +21,6 @@
 	</form>
 	
 	<action-method name="action-sequence-attr-build-next-number">
-		<call class="com.axelor.gst.controller.SequenceController" method="calculate"/>
+		<call class="com.axelor.gst.controller.SequenceController" method="generateNextNumber"/>
 	</action-method>
 </object-views>

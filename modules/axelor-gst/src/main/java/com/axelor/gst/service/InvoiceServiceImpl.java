@@ -1,7 +1,6 @@
 package com.axelor.gst.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.axelor.gst.db.Address;
@@ -20,43 +19,34 @@ public class InvoiceServiceImpl implements InvoiceService {
 	 */
 	@Override
 	public Invoice calculateGST(Invoice invoice) {
-		if (invoice.getCompany() != null && invoice.getInvoiceAddress() != null && invoice.getInvoiceItems() != null && invoice.getParty() != null) {
-			Company company = invoice.getCompany();
-			Address invoiceAddress = invoice.getInvoiceAddress();
-			BigDecimal invoiceNetAmount = BigDecimal.ZERO;
-			BigDecimal invoiceNetIgst = BigDecimal.ZERO;
-			BigDecimal invoiceNetCgst = BigDecimal.ZERO;
-			BigDecimal invoiceNetSgst = BigDecimal.ZERO;
-			BigDecimal invoiceGrossAmount = BigDecimal.ZERO;
-			List<InvoiceLine> invoiceItemList = invoice.getInvoiceItems();
-			for (InvoiceLine item : invoiceItemList) {
-				item = invoiceLineService.calculateInvoiceLineAmount(item, company, invoiceAddress);
-				invoiceNetAmount = invoiceNetAmount.add(item.getNetAmount());
-				invoiceNetIgst = invoiceNetIgst.add(item.getIgst());
-				invoiceNetCgst = invoiceNetCgst.add(item.getCgst());
-				invoiceNetSgst = invoiceNetSgst.add(item.getSgst());
-				invoiceGrossAmount = invoiceGrossAmount.add(item.getGrossAmount());
-			}
-			invoice.setNetAmount(invoiceNetAmount);
-			invoice.setNetCgst(invoiceNetCgst);
-			invoice.setNetIgst(invoiceNetIgst);
-			invoice.setNetSgst(invoiceNetSgst);
-			invoice.setGrossAmount(invoiceGrossAmount);
+		Boolean isDiff = isStateDifferent(invoice.getCompany(),invoice.getInvoiceAddress());
+		if (isDiff != null && invoice.getInvoiceItems() != null && invoice.getParty() != null) {
+				BigDecimal invoiceNetAmount = BigDecimal.ZERO;
+				BigDecimal invoiceNetIgst = BigDecimal.ZERO;
+				BigDecimal invoiceNetCgst = BigDecimal.ZERO;
+				BigDecimal invoiceNetSgst = BigDecimal.ZERO;
+				BigDecimal invoiceGrossAmount = BigDecimal.ZERO;
+				List<InvoiceLine> invoiceItemList = invoice.getInvoiceItems();
+				for (InvoiceLine item : invoiceItemList) {
+					item = invoiceLineService.calculateInvoiceLineAmount(item,isDiff);
+					invoiceNetAmount = invoiceNetAmount.add(item.getNetAmount());
+					invoiceNetIgst = invoiceNetIgst.add(item.getIgst());
+					invoiceNetCgst = invoiceNetCgst.add(item.getCgst());
+					invoiceNetSgst = invoiceNetSgst.add(item.getSgst());
+					invoiceGrossAmount = invoiceGrossAmount.add(item.getGrossAmount());
+				}
+				invoice.setNetAmount(invoiceNetAmount);
+				invoice.setNetCgst(invoiceNetCgst);
+				invoice.setNetIgst(invoiceNetIgst);
+				invoice.setNetSgst(invoiceNetSgst);
+				invoice.setGrossAmount(invoiceGrossAmount);
 		} else {
 			BigDecimal totalNetAmount = BigDecimal.ZERO;
 			if (invoice.getInvoiceItems() != null) {
-				List<InvoiceLine> invoiceItemList = invoice.getInvoiceItems();
-				List<InvoiceLine> newInvoiceItemList = new ArrayList<InvoiceLine>();
-				for (InvoiceLine item : invoiceItemList) {
-					item.setNetAmount(item.getPrice().multiply(new BigDecimal(item.getQty())));
-					item.setCgst(BigDecimal.ZERO);
-					item.setIgst(BigDecimal.ZERO);
-					item.setSgst(BigDecimal.ZERO);
-					item.setGrossAmount(item.getNetAmount());
+				for (InvoiceLine item : invoice.getInvoiceItems()) {
+					item = invoiceLineService.calculateInvoiceLineAmount(item,isDiff);
 					totalNetAmount = totalNetAmount.add(item.getNetAmount());
-					newInvoiceItemList.add(item);
 				}
-				invoice.setInvoiceItems(newInvoiceItemList);
 			}
 			invoice.setNetAmount(totalNetAmount);
 			invoice.setNetCgst(BigDecimal.ZERO);
@@ -65,5 +55,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 			invoice.setGrossAmount(totalNetAmount);
 		}
 		return invoice;
+	}
+	
+	@Override
+	public Boolean isStateDifferent(Company company,Address address) {
+		Boolean stateDiff = null;
+		if(company !=null && address !=null && company.getAddress() != null && company.getAddress().getState() != null && address.getState() != null) {
+			if(company.getAddress().getState().equals(address.getState()))
+				stateDiff = false;
+			else
+				stateDiff = true;
+		}
+		return stateDiff;
 	}
 }

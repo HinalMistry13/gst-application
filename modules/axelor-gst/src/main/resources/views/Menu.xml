@@ -17,6 +17,7 @@
 	    	<view type="grid" name="party-grid"/>
 	    	<view type="form" name="party-form"/>
 	    	<view type="cards" name="party-card"/>
+	    	<context name="json-enhance" expr="true"/>
 	   	</action-view>
 	  
 	  	<menuitem name="menu-party-root-contact" parent="menu-party-root" title="Contact" action="action.contact.view.all"/>

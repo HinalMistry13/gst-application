@@ -117,6 +117,7 @@
 	<action-group name="action-invoice-group-onnew-actions">
 		<action name="action-invoice-record-default-record"/>
 		<action name="action-invoice-method-set-invoice-items" if="products!=null"/>
+		<action name="action-invoice-item-method-calculate-amount" if="products!=null"/>
 	</action-group>
 	
 	<action-group name="action-invoice-group-onsave-actions">
@@ -159,6 +160,7 @@
 		<field name="invoiceDate" expr="eval:__date__"/>
 		<field name="status" expr="draft"/>
 		<field name="sameAddress" expr="true"/>
+		<field name="company" expr="eval:__repo__(Company).all().fetchOne()"/>
 	</action-record>
 	
 	<action-attrs name="action-invoice-attr-set-shipping">
@@ -178,7 +180,7 @@
 	</action-attrs>
 	
 	<action-attrs name="action-invoice-attr-set-first-element">
-		<attribute name="value" for="partyContact" expr="eval: party?.contactList?.find{it.type == 'primary'}" if="party"/>
+		<attribute name="value" for="partyContact" expr="eval: party?.contactList?.find{it.type == 'primary'}" if="party"/> 
 		<attribute name="value" for="invoiceAddress" expr="eval: party?.addressList?.find{it.type != 'shipping'}" if="party"/>
 		<attribute name="value" for="shippingAddress" expr="eval: party?.addressList?.find{it.type != 'invoice'}" if="party"/>
 		<attribute name="value" for="partyContact" expr="" if="!party"/>
@@ -202,4 +204,5 @@
 	<action-method name="action-invoice-method-set-invoice-items">
 		<call class="com.axelor.gst.controller.InvoiceLineController" method="getProductsByIds"/>
 	</action-method>
+	
 </object-views>

@@ -13,7 +13,7 @@ public class SequenceController {
 	/*
 	 * this method generate the Next Number for the sequence and set field.
 	 */
-	public void calculate(ActionRequest request,ActionResponse response) {
+	public void generateNextNumber(ActionRequest request,ActionResponse response) {
 		Sequence sequence = request.getContext().asType(Sequence.class);
 		String str = sequenceService.getNextIndex(sequence);
 		response.setValue("nextNumber", str);

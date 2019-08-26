@@ -52,7 +52,7 @@
 					FROM 
 						gst_invoice invoice
 					WHERE 
-						invoice.status <> 'paid'
+						invoice.status NOT IN ('paid','canceled')
 						AND 
 						invoice.invoice_date between DATE(:fromDate) AND DATE(:toDate)
 				) inv on inv.p = party.id
@@ -140,10 +140,9 @@
 	
 	<action-view name="action-invoice-grid-view-status-date-wise" title="Draft Invoices" model="com.axelor.gst.db.Invoice">
 	    <view type="grid" name="invoice-grid" />
-	    <domain>self.status NOT IN (:statusPaid,:statusCanceled) AND (self.invoiceDate &gt;= :fromDate AND self.invoiceDate &lt;= :toDate)</domain>
+	    <domain>self.status NOT IN (:statusPaid,:statusCanceled) AND (self.invoiceDate &lt;= :fromDate)</domain>
 		<context name="statusPaid" expr="paid"/>
 		<context name="statusCanceled" expr="canceled"/>	
 		<context name="fromDate" expr="eval:__date__.minusMonths(1)"/>
-		<context name="toDate" expr="eval:__date__"/>
 	</action-view>
 </object-views>
