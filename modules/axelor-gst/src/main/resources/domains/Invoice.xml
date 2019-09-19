@@ -23,7 +23,7 @@
 		<decimal name="netSgst" title="Net SGST"/>
 		<decimal name="grossAmount" title="Gross Amount"/>
 		<one-to-many name="invoiceItems" ref="com.axelor.gst.db.InvoiceLine" mappedBy="invoice" title="Invoice Items"/>
-	
+		<string name="importId" title="Import Id"/>
 		<extra-code>
 			<![CDATA[
 				public static final String INVOICE_STATUS_DRAFT = "draft";

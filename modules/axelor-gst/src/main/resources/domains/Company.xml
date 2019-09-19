@@ -20,6 +20,7 @@
 		<one-to-many name="contactList" ref="com.axelor.gst.db.Contact" title="Contact"/>
 		<string name="gstIn" title="GSTIN" max="15" min="15"/>
 		<one-to-many name="bankAccountList" ref="com.axelor.gst.db.BankAccount" title="Bank Account"/>
-		<many-to-one name="address" ref="com.axelor.gst.db.Address" title="Address"/>		
+		<many-to-one name="address" ref="com.axelor.gst.db.Address" title="Address"/>
+		<string name="importId" title="Import Id"/>		
 	</entity>
 </domain-models>

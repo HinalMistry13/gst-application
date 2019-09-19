@@ -6,6 +6,7 @@
 	
 	<module package="com.axelor.gst.db" name="gst"/>
 	<entity name="Product">
+		<string name="importId" title="Import Id"/>		
 		<string name="name" title="Name" required="true" />
 		<string name="code" title="Code" required="true" />
 		<string name="hsbn" title="HSBN"/>

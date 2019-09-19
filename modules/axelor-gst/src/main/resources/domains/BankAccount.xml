@@ -6,6 +6,7 @@
 	
 	<module package="com.axelor.gst.db" name="gst"/>
 	<entity name="BankAccount">
+		<string name="importId" title="Import Id"/>		
 		<string name="bank" title="Bank" namecolumn="true" required="true" />
 		<string name="accountNo" title="Account No" required="true" />
 		<string name="ifsc" title="IFSC" required="true" />

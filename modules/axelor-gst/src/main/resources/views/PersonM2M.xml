@@ -2,20 +2,16 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.1.xsd">
 	
-	<grid model="com.axelor.gst.db.Country" title="Country" name="country-grid">
-		<toolbar>
-			<button name="importBtn" title="Import" onClick="action-import-method"/>
-		</toolbar>
+	<grid model="com.axelor.gst.db.Person" title="Person" name="person-grid">
 		<field name="name" title="Name" />
+		<field name="vehicles" title="Vehicles" />
 	</grid>
 	
-	<form model="com.axelor.gst.db.Country" title="Country" name="country-form">
+	<form model="com.axelor.gst.db.Person" title="Person" name="person-form">
 		<panel>
 			<field name="name" required="true"/>
+			<field name="vehicles"/>
 		</panel>
 	</form>
 	
-	<action-method name="action-import-method">
-		<call class="com.axelor.gst.controller.ImportController" method="importCSV"/>
-	</action-method>
 </object-views>

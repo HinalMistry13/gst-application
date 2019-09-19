@@ -6,6 +6,7 @@
 	
 	<module package="com.axelor.gst.db" name="gst"/>
 	<entity name="Party">
+		<string name="importId" title="Import Id"/>		
 		<string name="reference" title="Reference"/>
 		<string name="name" title="Name" required="true" />
 		<string name="type" title="Type" required="true" default="company" selection="com.axelor.gst.party.type"/>

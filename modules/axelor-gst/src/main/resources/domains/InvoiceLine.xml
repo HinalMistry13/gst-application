@@ -24,5 +24,6 @@
 		<decimal name="sgst" title="SGST" />
 		<decimal name="cgst" title="CGST" />
 		<decimal name="grossAmount" title="Gross Amount" />
+		<string name="importId" title="Import Id"/>
 	</entity>
 </domain-models>

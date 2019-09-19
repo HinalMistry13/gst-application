@@ -30,6 +30,7 @@
 	<form model="com.axelor.gst.db.Invoice" title="Invoice" name="invoice-form" onNew="action-invoice-group-onnew-actions" onSave="action-invoice-group-onsave-actions">
 		<toolbar>
 			<button name="invoicePrintbutton" title="Print" icon="fa-print" onClick="action-invoice-group-print-actions" showIf="id"/>
+			<button name="invoiceLineImportBtn" title="Import Invoice Line" onClick="save,action-invoice-view-import-invoicelines-popup" />
 		</toolbar>
 		<panel>		
 			<field name="status" readonly="true" widget="nav-select" colSpan="9"/>
@@ -205,4 +206,26 @@
 		<call class="com.axelor.gst.controller.InvoiceLineController" method="getProductsByIds"/>
 	</action-method>
 	
+	<!-- Import invoice lines stuffs -->
+	
+	<form name="wizard-import-invoicelines-form" title="Import InvoiceLines" model="com.axelor.gst.db.Invoice">
+    	<panel name="wizardPanel">
+    		<field name="metaFile" title="Input file" type="many-to-one" target="com.axelor.meta.db.MetaFile" widget="binary-link"/>
+			<button name="importBtn" colSpan="4" title="Import" readonlyIf="metaFile == null" onClick="action-invoice-method-import-invoicelines,close"/>
+    	</panel>
+    </form>
+    
+    <action-view name="action-invoice-view-import-invoicelines-popup" title="Import InvoiceLines" model="com.axelor.gst.db.Invoice">
+    	<view type="form" name="wizard-import-invoicelines-form"/>
+    	<view-param name="width" value="800"/>
+    	<view-param name="popup" value="true"/>
+    	<view-param name="show-confirm" value="false"/>
+  		<view-param name="popup-save" value="false"/>
+  		<view-param name="popup" value="reload"/>
+  		<context name="_invoiceId" expr="eval :id"/>
+    </action-view>
+    
+    <action-method name="action-invoice-method-import-invoicelines">
+    	<call class="com.axelor.gst.controller.ImportController" method="importInvoiceLines"/>
+    </action-method>
 </object-views>

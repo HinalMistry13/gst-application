@@ -4,11 +4,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.1.xsd">
 	
-	<module package="com.axelor.gst.db" name="gst"/>
-	<entity name="ProductCategory">
-		<string name="importId" title="Import Id"/>		
+	<module package="com.axelor.gst.db" name="m2m"/>
+	<entity name="Person">
+		<string name="importId" title="Import Id"/>
 		<string name="name" title="Name" required="true" />
-		<string name="code" title="Code" required="true" />
-		<decimal name="gstRate" title="GST Rate"/>
+		<many-to-many name="vehicles" ref="com.axelor.gst.db.Vehicle"/>
 	</entity>
 </domain-models>

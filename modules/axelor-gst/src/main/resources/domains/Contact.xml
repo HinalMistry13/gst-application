@@ -6,13 +6,13 @@
 	
 	<module package="com.axelor.gst.db" name="gst"/>
 	<entity name="Contact">
+		<string name="importId" title="Import Id"/>		
 		<string name="name" title="Name" required="true" />
 		<string name="type" title="Type" required="true" selection="com.axelor.gst.contact.type" />
 		<string name="primaryEmail" title="Primary Email"/>
 		<string name="secondaryEmail" title="Secondary Email"/>
 		<string name="primaryPhone" title="Primary Phone"/>
 		<string name="secondaryPhone" title="Secondary Phone"/>
-		
 		<extra-code>
 			<![CDATA[
 				public static final String CONTACT_TYPE_PRIMARY = "primary";
