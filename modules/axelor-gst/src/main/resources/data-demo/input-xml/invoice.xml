@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invoices>
+	<invoice>
+		<importId>2</importId>
+		<status>draft</status>
+		<company>Marvin Industry</company>
+		<party>Dhruv's</party>
+		<partyCont>Poonam Patel</partyCont>
+		<invoiceAddress>Ziac</invoiceAddress>
+		<shippingAddress>Ziac</shippingAddress>
+		<invDate>20/09/2019</invDate>
+		<invoice-lines>
+			<invoiceLine>
+				<product>One plus 7 pro</product>
+				<qty>2</qty>
+				<price>50000</price>
+				<gstRate>12</gstRate>
+			</invoiceLine>
+			<invoiceLine>
+				<product>Men's T-shirt</product>
+				<qty>6</qty>
+				<price>600</price>
+				<gstRate>10</gstRate>
+			</invoiceLine>
+		</invoice-lines>
+	</invoice>
+</invoices>

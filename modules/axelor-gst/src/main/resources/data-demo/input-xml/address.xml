@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addresses>
+	<address>
+		<importId>3</importId>
+		<type>invoice</type>
+		<line1>Signature</line1>
+		<line2></line2>
+		<city>Surat</city>
+		<state>Gujarat</state>
+		<country>India</country>
+		<pincode>357002</pincode>
+	</address>
+	<address>
+		<importId>4</importId>
+		<type>default</type>
+		<line1>Zydus</line1>
+		<line2></line2>
+		<city>Mumbai</city>
+		<state>Maharashtra</state>
+		<country>India</country>
+		<pincode>456098</pincode>
+	</address>
+</addresses>

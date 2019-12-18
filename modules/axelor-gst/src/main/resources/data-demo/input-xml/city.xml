@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cities>
+	<city>
+		<name>Surat</name>
+		<state>Gujarat</state>
+		<country>India</country>
+	</city>
+	<city>
+		<name>Mumbai</name>
+		<state>Maharashtra</state>
+		<country>India</country>
+	</city>
+</cities>

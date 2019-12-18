@@ -6,8 +6,10 @@ import java.util.LinkedHashMap;
 
 import org.apache.commons.io.FileUtils;
 
+import com.axelor.data.Importer;
 import com.axelor.data.Listener;
 import com.axelor.data.csv.CSVImporter;
+import com.axelor.data.xml.XMLImporter;
 import com.axelor.db.Model;
 import com.axelor.gst.service.InvoiceLineService;
 import com.axelor.inject.Beans;
@@ -24,8 +26,10 @@ public class ImportController {
 	InvoiceLineService invoiceLineService;
 	
 	public void importCSV(ActionRequest request, ActionResponse response) {
-		CSVImporter importer = new CSVImporter("/home/axelor/hinal/GST/axelor-gst-app/modules/axelor-gst/src/main/resources/data-demo/input-config.xml",
-				"/home/axelor/hinal/GST/axelor-gst-app/modules/axelor-gst/src/main/resources/data-demo/input");
+//		Importer importer = new CSVImporter("/home/axelor/hinal/GST/axelor-gst-app/modules/axelor-gst/src/main/resources/data-demo/input-config.xml",
+//				"/home/axelor/hinal/GST/axelor-gst-app/modules/axelor-gst/src/main/resources/data-demo/input");
+		Importer importer = new XMLImporter("/home/axelor/hinal/GST/axelor-gst-app/modules/axelor-gst/src/main/resources/data-demo/input-xml-config.xml",
+				"/home/axelor/hinal/GST/axelor-gst-app/modules/axelor-gst/src/main/resources/data-demo/input-xml");
 		importer.addListener(new Listener() {
 			
 			@Override
